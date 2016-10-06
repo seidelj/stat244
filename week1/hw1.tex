@@ -1,0 +1,249 @@
+\documentclass{tufte-book}
+
+\usepackage{amsmath, amsthm}
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{graphics/}}
+
+\title{STATS 244 \\ Homework 1}
+\author{Joe Seidel}
+\date{\today}
+
+\usepackage{booktabs}
+\usepackage{units}
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\usepackage{multicol}
+\usepackage{lipsum}
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usepackage{wasysym}
+
+\newcommand{\doccmd}[1]{\texttt{\textbackslash#1}}% command name -- adds backslash automatically
+\newcommand{\docopt}[1]{\ensuremath{\langle}\textrm{\textit{#1}}\ensuremath{\rangle}}% optional command argument
+\newcommand{\docarg}[1]{\textrm{\textit{#1}}}% (required) command argument
+\newenvironment{docspec}{\begin{quote}\noindent}{\end{quote}}% command specification environment
+\newcommand{\docenv}[1]{\textsf{#1}}% environment name
+\newcommand{\docpkg}[1]{\texttt{#1}}% package name
+\newcommand{\doccls}[1]{\texttt{#1}}% document class name
+\newcommand{\docclsopt}[1]{\texttt{#1}}% document class option name
+\DeclareMathOperator{\proj}{proj}
+\newcommand{\vct}{\mathbf}
+
+
+\newcommand{\dprod}[2]{\langle #1, #2 \rangle}
+
+\newtheoremstyle{mytheoremstyle} % name
+	{\topsep}		% Space above
+	{\topsep}		% Space below
+	{\itshape}		% Body font
+	{}			% Indent amount
+	{\bfseries}	% Theorem head font
+	{\textnormal{:}}	% Punctuation after theorem head
+	{.5em}		% Space after theorem head
+	{}			%Theorem headspec
+\theoremstyle{mytheoremstyle}
+\newtheorem*{thm}{Thm.}
+
+\newtheoremstyle{mylemstyle} % name
+	{\topsep}		% Space above
+	{\topsep}		% Space below
+	{\itshape}		% Body font
+	{}			% Indent amount
+	{\bfseries}	% Theorem head font
+	{\textnormal{:}}	% Punctuation after theorem head
+	{.5em}		% Space after theorem head
+	{}			%Theorem headspec
+\theoremstyle{mylemstyle}
+\newtheorem*{lem}{Lem.}
+
+
+\newtheoremstyle{mydefstyle} % name
+	{\topsep}		% Space above
+	{\topsep}		% Space below
+	{\normalfont}	% Body font
+	{}			% Indent amount
+	{\bfseries}	% Theorem head font
+	{\textnormal{:}}	% Punctuation after theorem head
+	{.5em}		% Space after theorem head
+	{}			%Theorem headspec
+\theoremstyle{mydefstyle}
+\newtheorem*{mydef}{Def.}
+\newtheorem*{ex}{E.g.}
+
+\begin{document}
+
+\maketitle
+\pagenumbering{gobble}
+\newpage
+\pagenumbering{arabic}
+
+
+\subsection{Rice Chapter 1, 20}
+A deck of 52 cards has been shuffled thoroughly. What is the probability that the four aces are next to each other?
+
+Let $A$ be the event that 4 aces are next to each other.  Consider 4 aces as being one card, then there are $(48!4!)$ ways to shuffle the deck with the four aces together.   Since the 4 aces can be anywhere in the deck, there are $49$ locations they can appear in the deck.  Thus there are $\frac{(49)48!4!}{52!}$
+\[ \frac{49!4!}{52!} = \frac{4!}{(52)(51)(50)} = \frac{1}{5525} \]
+
+
+\subsection{Rice Chapter 1, 60}
+A factory runs three shifts.  In a given day, $1\%$ of items produced by the first shift are defective, $2\%$ of the second shit's items are defective, and $5\%$ of the third shift's items are defective.  If the shifts all have the same productivity, what percentage of items produced in a day are defective?  If an item is defective, what is the probability that it was produced by the third shift?
+
+\newthought{Suppose WLOG}, the factory produces 300 items a day.  Since all shifts have the same productivity, each shift manufacturs 100 items.   Then the percentage of defective item produced per day is $\frac{8}{300} \approx 2.7\%$.  Conditional on a defective item being chose, the probability that it was produced by the third shift is $P(B \ | \  D)=\frac{\frac{.05}{3}}{\frac{.08}{3}} = \frac{5}{7}$ where D is a defective item.
+
+
+\subsection{Rice Chapter 1, 72}
+Suppose that $n$ components are connected in series.  For each unit, there is a backup unit, and the system fails if and only if both a unit and its backup fail.  Assuming the all the units are independent and fail with probability $p$, what is the probability that the system works?  For $n=10$ and $p=.05$.
+
+\newthought{For any given} component the probability of failure is
+\[ p^2=.05^2=.0025 \]
+Let $F$ be probability of failure. Following example F, we'll find the probability of the compiment of this event, $P(F^c)$ or probability that all the components work.
+\begin{align}
+P(F) &= 1 - P(F^c) \\
+&= 1 - (1-p)^n \\
+&= 1 - (1-.0025)^{10} \\
+&= 1 - (.975) \\
+&= .025
+\end{align}
+The probability of failure in example F was $.40$ so this is a considerable improvement.
+
+
+\subsection{Rice Chapter 1, 78}
+This problem introduces some aspects of a simple genetic model.  Assume that genes in an organism occur in pairs and that each member of the pair can be either of the types $a$ or $A$.  The possible genotypes of an organism are then $AA$, $Aa$ and $aa$ ($Aa$ and $aA$ are equivalent).  When two organisms mate, each independently contributes one of its two genese; either one of the pair is transmitted with probability $.5$.
+\begin{enumerate}
+\item Suppose that the genotypes of the parents are $AA$ and $Aa$. Find the possible genotypes of their offspring and the corresponding probabilities.
+
+\newthought{Consider the table}\\
+\begin{tabular}{ r|c|c| }
+\multicolumn{1}{r}{}
+ &  \multicolumn{1}{c}{A}
+ & \multicolumn{1}{c}{A} \\
+\cline{2-3}
+A & AA & AA \\
+\cline{2-3}
+a & Aa & Aa \\
+\cline{2-3}
+\end{tabular}
+
+The possible genotypes are $\{AA, Aa \}$ with both with $.5$ probability.
+
+\item Suppose that the probabilies of the genotypes $AA$, $Aa$ and $aa$ are $p$, $2q$, and $r$, respectively, in the first generation.  Find the probabilities in the second and third generations and show that these are the same.  This result is called the Hardy-Weinberg Law.
+
+\newthought{The probabilities tables} for each genome type given parent types are as follows.
+
+\begin{tabular}{ r|c|c|c| }
+\multicolumn{1}{r}{P(AA)}\\
+\multicolumn{1}{r}{}
+ & \multicolumn{1}{c}{AA}
+ & \multicolumn{1}{c}{Aa}
+ & \multicolumn{1}{c}{aa} \\
+\cline{2-4}
+AA & 1 & .5 & 0 \\
+\cline{2-4}
+Aa & .5 & .25 & 0 \\
+\cline{2-4}
+aa & 0 & 0 & 0 \\
+\cline{2-4}
+\end{tabular}
+
+\begin{tabular}{ r|c|c|c| }
+\multicolumn{1}{r}{P(Aa)}\\
+\multicolumn{1}{r}{}
+ & \multicolumn{1}{c}{AA}
+ & \multicolumn{1}{c}{Aa}
+ & \multicolumn{1}{c}{aa} \\
+\cline{2-4}
+AA & 0 & .5 & 1 \\
+\cline{2-4}
+Aa & .5 & .5 & .5 \\
+\cline{2-4}
+aa & 1 & .25 & 0 \\
+\cline{2-4}
+\end{tabular}
+
+\begin{tabular}{ r|c|c|c| }
+\multicolumn{1}{r}{P(aa)}\\
+\multicolumn{1}{r}{}
+ & \multicolumn{1}{c}{AA}
+ & \multicolumn{1}{c}{Aa}
+ & \multicolumn{1}{c}{aa} \\
+\cline{2-4}
+AA & 0 & 0 & 0 \\
+\cline{2-4}
+Aa & 0 & .25 & .5 \\
+\cline{2-4}
+aa & 0 & .5 & 1 \\
+\cline{2-4}
+\end{tabular}
+
+$P_g(x)$ is the probability of a genotype for generation $g$.
+
+\begin{align*}
+P_2(AA) &= P_2(AA \mid AA,AA)P_1(AA,AA) \\
+&+ 2(P_2(AA\mid AA, Aa)P_1(AA,Aa))\\
+&+ P_2(AA \mid Aa, Aa)P_1(Aa,Aa))\\
+&= (1)(p^2) + 2(.5)(2pq) + (.25)(4q^2)\\
+&= p^2 + 2pq + q^2\\
+&= (p+q)^2
+\end{align*}
+
+\begin{align*}
+P_2(Aa) &= P_2(Aa \mid Aa,Aa)P_1(Aa,Aa)\\
+&+ 2(P_2(Aa\mid AA, Aa)P_1(AA, Aa))\\
+&+ 2(P_2(Aa\mid Aa, aa)P_1(Aa,aa))\\
+&+ 2(P_2(Aa\mid AA,aa)P_1(AA,aa))\\
+&= (.5)(4q^2) + 2(.5)(2pq) \\
+&+ 2(.25)(2qr) + 2(1)(pr)\\
+&= 2q^2+2pq+2pqr_2pr \\
+&=2(q+p)(q+r)
+\end{align*}
+
+\begin{align*}
+P_2(aa) &= P_2(aa \mid Aa,Aa)P(Aa,Aa)\\
+&+ 2(P_2(aa\mid Aa,aa)P_1(Aa,aa)\\
+&+ P_2(aa\mid aa,aa)P_1(aa,aa)\\
+&= (.25)(4q^2) + 2(.5)(2pr) + (1)(r^2)\\
+&= q^2 + 2qr + r^2\\
+&= (q+r)^2
+\end{align*}
+
+\begin{proof} It has been shown above that $P_2(AA)=(p+q)^2$, $P_2(Aa)=2(q+p)(q+r)$ and $P_2(aa)=(q+r)^2$.  To find the Hardy-Weinberg Law result,we must show that $P_2(AA)=P_3(AA)$, $P_2(Aa)=P_3(Aa)$ and $P_2(aa)=P_3(aa)$.
+
+First, it will be important to note that the sum of the three probabilities for a given generation will sum to 1.  Ie...
+\[ (q+p)^2 + 2(q+p)(q+r) + (q+r)^2 = 1 \]
+
+Using the method to determine probabilities for generation 2 we can determine generation 3.
+
+\begin{align*}
+P_3(AA) &= 1(p+q)^4 + 2(.5)(p+q)^2 \\
+&+ 2(q+p)(q+r) + (.25)4(p+q)(q+r)^2 \\
+&= (p+q)^4 + 2(p+q)^3(q+r)+(p+q)^2(q+r)^2 \\
+&= (p+q)^2[(p+q)^2 + 2(p+q)(q+r) + (q+r)^2]\\
+&= (p+q)^2
+\end{align*}
+
+\begin{align*}
+P_3(Aa) &= (.25)(4)(q+p)^2(q+r)^2 + 2(.5)2(p+q)(q+r)(p+q)^2\\
+&= 2(.5)2(p+q)(q+r)(q+r)^2 + 2(p+q)^2(q+r)^2\\
+&= 2(p+q)^2(q+r)^2 + 2(p+q)^3(q+r)\\
+&+ 2(p+q)(q+r)^3 + 2(p+q)^2(q+r)^2\\
+&= 2(q+p)(q+r)[(q+p)(q+r) + (p+q)^2\\
+&+ (q+r)^2 (q+r)(q+r)]\\
+&= 2(q+p)(q+r)[(p+q)^2 + 2(q+p)(q+r) +(q+r)^2]\\
+&= 2(q+p)(q+r)
+\end{align*}
+
+\begin{align*}
+P_3(aa) &= .25(4)(q+p)^2(q+r)^2\\
+&+ 2(.5)(q+r)^22(q+p)(q+r) + 1(q+r)^2\\
+&= (q+p)^2(q+r)^2 = 2(q+r)^3(q+p) + (q+r)^4\\
+&= (q+r)^2[(q+p)^2 + 2(q+r)(q+p) + (q+r)^2]\\
+&= (q+r)^2
+\end{align*}
+
+\end{proof}
+
+\end{enumerate}
+
+\end{document}
+\grid
