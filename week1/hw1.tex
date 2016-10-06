@@ -209,7 +209,7 @@ P_2(aa) &= P_2(aa \mid Aa,Aa)P(Aa,Aa)\\
 
 \begin{proof} It has been shown above that $P_2(AA)=(p+q)^2$, $P_2(Aa)=2(q+p)(q+r)$ and $P_2(aa)=(q+r)^2$.  To find the Hardy-Weinberg Law result,we must show that $P_2(AA)=P_3(AA)$, $P_2(Aa)=P_3(Aa)$ and $P_2(aa)=P_3(aa)$.
 
-First, it will be important to note that the sum of the three probabilities for a given generation will sum to 1.  Ie...
+First, it will be important to note that the three probabilities for a given generation's offspring will sum to 1.  Ie...
 \[ (q+p)^2 + 2(q+p)(q+r) + (q+r)^2 = 1 \]
 
 Using the method to determine probabilities for generation 2 we can determine generation 3.
@@ -245,5 +245,149 @@ P_3(aa) &= .25(4)(q+p)^2(q+r)^2\\
 
 \end{enumerate}
 
+
+\subsection{Rice Chapter 2, 8}
+Show that the binomial probabilies sum to 1.
+
+\begin{proof}The binomial distribution $(n,\theta)$ is given as
+\[ b(x;n,\theta) = \binom{n}{x}\theta(1-\theta)^{n-x}  \text{ for } x=1,2,...,n\]
+
+Since $(a+b)^n=\sum_{k=0}^n\binom{n}{k}a^kb^{n-k}$
+
+\begin{align*}
+\sum b(x;n,\theta) &= \sum_{x=0}^{n}\binom{n}{x}\theta(1-\theta)^{n-x}\\
+&= (\theta+1-\theta )^n\\
+&= 1
+\end{align*}
+\end{proof}
+
+
+\subsection{Rice Chapter 2, 28}
+
+Let $p_0, p_1,...,p_n$ denote the probability mass function of the binomial distribution with parameters $n$ and $p$.  Let $q=1-p$.  Show that the binomial probabilies can be compitered recursively by $p_0=q^n$ and
+\[ p_k = \frac{(n-k+1)p}{kq}p_{k-1} \text{, } k=1,2,...,n \]
+Use this relation to find $P(X\leq4)$ for $n=9000$ and $p=.0005$.
+
+\begin{proof}The binomial mass function for the parameters $n$ and $p$ and $q=1-p$ for $P(X=0)$ is
+
+\begin{align*}
+p_0 &= \binom{n}{0}p^0(1-p)^{n-0}\\
+&= \frac{n!}{0!n!}p^0(q)^n\\
+&= q^n
+\end{align*}
+
+Now consider \marginnote{Binomial identity: $\binom{n}{k} = \frac{n+1-k}{k}\binom{n}{k-1}$}
+\begin{align*}
+p_1 &= \binom{n}{1}p^1q^{n-1}\\
+&= \frac{n+1-1}{1}\binom{n}{1-1}p^1q^{n-1}\\
+&= n\binom{n}{0}pq^{n-1}\\
+&= npq^{n-1}
+\end{align*}
+
+Taking the ratio of $p_1$ and $p_0$
+
+\begin{align*}
+\frac{p_1}{p_0} &= \frac{npq^{n-1}}{q^n}\\
+&= \frac{np}{q}
+\end{align*}
+
+Then
+\[ p_1 = \frac{np}{q}p_0 \]
+
+More generally, since
+\begin{align*}
+p_k &= \binom{n}{k}p^kq^{n-k}\\
+&= \frac{n+1-k}{k}\binom{n}{k-1}p^kq^{n-k}\\
+\end{align*}
+and
+\begin{align*}
+p_{k-1} &= \binom{n}{k-1}p^{k-1}q^{n-(k-1)}\\
+\end{align*}
+then
+\begin{align*}
+\frac{p_k}{p_{k-1}} &= \frac{\frac{n+1-k}{k}\binom{n}{k-1}p^kq^{n-k}}{\binom{n}{k-1}p^{k-1}q^{n-(k-1)}}\\
+&= \frac{(n+1-k)}{k}pq^{-1}\\
+&= \frac{(n+1-k)p}{kq}\\
+\end{align*}
+
+Therefore
+\[p_k = \frac{(n+1-k)p}{kq}p_{k-1} \]
+\end{proof}
+
+\newthought{Using this relation} we can find $P(X\leq4)$ for $n=9000$ and $p=.0005$.
+\begin{align*}
+P(X\leq4) &= \sum_{k=0}^4p_k\\
+&= (.011)+(.05)+(.11)+(.16)+(.18)\\
+&= .511
+\end{align*}
+
+\subsection{Question 7}
+In heads up Texas hold 'em (two players, each dealt two cards), find the probability that neither is dealt a pair (two cards of the same rank).  If there are three players, what is the probability that none have a pair?
+
+\newthought{Let} $A$ be the event that the first player gets a pair and let $B$ be the event that the second player gets a pair.  The probability that no player gets a pair is
+
+\[1-(P(A) + P(B) - P(A\cap B))\]
+\[1-2(.0588) - (.0048)) = .8822\]
+
+\newthought{Now let} $C$ be the probability that the third player gets a pair.  We can calcute the probability that none of the players get a pair using
+
+\begin{align*}
+1 - P(A\cup B\cup C) &= 1 - (P(A) + P(B) + P(C)\\
+&- P(A\cap B) - P(C\cap A) - P(B \cap C) \\
+&+ P(A\cap B\cap C))
+\end{align*}
+
+Where $P(A) = P(B) = P(C) = .0588$ and $P(A\cap C) \approx P(C\cap A) \approx P(B \cap C)\approx .0048$.
+
+\begin{align*}
+P(A\cap B\cap C) &= P(A)P(B\mid A)P(C\mid A,B)\\
+&=(.0588)(.0816)(.0178)\\
+\end{align*}
+
+The probability that no player has a pair is $.838$.
+
+
+\subsection{Question 8}
+For a Poisson process $N(,)$ with parameter $\lambda$, find the probabilities of the following events:
+
+\begin{enumerate}
+\item $N((1,5])>1$
+For a Poisson process the probability of k success over an interval of length $t$ is
+\[p(k) = \frac{\lambda t^ke^{-\lambda t}}{k!} \]
+
+Since
+\[ P(N((1,5])>1) = 1 - P(N(1,5]=0)) - P(N(1,5]=1)) \]
+Compute and take the sum of the probabilities of each number of outcomes.
+\begin{align*}
+P(N((1,5])>1) &= 1 - \frac{\lambda(4)^0e^{-\lambda(4)}}{0!} - \frac{\lambda(4)^{1}e^{-\lambda(4)}}{1!}\\
+&= 1 - e^{-4\lambda} - 4\lambda e^{-4\lambda}\\
+&= 1- e^{-4\lambda}(1- 4\lambda)
+\end{align*}
+
+\item N((0,1]) = N((0,2])
+
+Take $P(N(0,1]=k) \cap P(N(0,2]=k))$
+\[\frac{\lambda^ke^{-\lambda}}{k!} * \frac{\lambda 2^ke^{-\lambda 2}}{k!} =
+\frac{2\lambda^{2k}e^{-3\lambda}}{(k!)^2} \]
+
+\item N((1,2]) + N((3,4]) = 6
+
+Let $I$ be the index set of all pairs $x,y$ for which $x+y=6$ where $x,y \geq 0$.  Denote $A=N(1,2])$ and $B=N(2,3])$  Take
+\[\sum_{i\in I}P(A=x_i)P(B=y_i) \text{ for } x,y \in I.\]
+
+Which computes to $\frac{26.5}{180}(\lambda^{2k}e^{-2\lambda})$.
+
+\item N((0,1]) = N((1,2])+m for $m$ a nonnegative integer. Express you answer as an infinite series and then write your result in terms of a Bessel function (look it up).  This result in terms of Bessel functions can be used to, for example, give a simple accurate approximation to this probability when $m$ is large.
+
+\newthought{Proved some} integer $m$.  Find $P(N(0,1])=k+m \cap N(1,2]=k)$, denote these $P(A)$ and $P(B)$, respectively.
+
+\[ p(A) = \frac{\lambda t^{(k+m)}e^{-\lambda t}}{(k+m)!} \]
+\[ p(B) = p(k) = \frac{\lambda t^ke^{-\lambda t}}{k!} \]
+
+Multiplying the two yields
+\[ \frac{1}{k!(k+m)!}\lambda^{(2k+m)}e^{-2\lambda}. \]
+
+As $m$ gets larger the probability of $m$ outcomes will get closer and closer to $0$.
+\end{enumerate}
 \end{document}
 \grid
