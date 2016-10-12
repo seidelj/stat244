@@ -1,0 +1,486 @@
+\documentclass{tufte-book}
+
+\usepackage{amsmath, amsthm}
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{graphics/}}
+
+\title{STATS 244 \\ Homework 2}
+\author{Joe Seidel}
+\date{\today}
+
+\usepackage{booktabs}
+\usepackage{units}
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\usepackage{multicol}
+\usepackage{lipsum}
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usepackage{wasysym}
+
+\newcommand{\doccmd}[1]{\texttt{\textbackslash#1}}% command name -- adds backslash automatically
+\newcommand{\docopt}[1]{\ensuremath{\langle}\textrm{\textit{#1}}\ensuremath{\rangle}}% optional command argument
+\newcommand{\docarg}[1]{\textrm{\textit{#1}}}% (required) command argument
+\newenvironment{docspec}{\begin{quote}\noindent}{\end{quote}}% command specification environment
+\newcommand{\docenv}[1]{\textsf{#1}}% environment name
+\newcommand{\docpkg}[1]{\texttt{#1}}% package name
+\newcommand{\doccls}[1]{\texttt{#1}}% document class name
+\newcommand{\docclsopt}[1]{\texttt{#1}}% document class option name
+\DeclareMathOperator{\proj}{proj}
+\newcommand{\vct}{\mathbf}
+
+
+\newcommand{\dprod}[2]{\langle #1, #2 \rangle}
+\newcommand{\Var}{\mathrm{Var}}
+
+\newtheoremstyle{mytheoremstyle} % name
+	{\topsep}		% Space above
+	{\topsep}		% Space below
+	{\itshape}		% Body font
+	{}			% Indent amount
+	{\bfseries}	% Theorem head font
+	{\textnormal{:}}	% Punctuation after theorem head
+	{.5em}		% Space after theorem head
+	{}			%Theorem headspec
+\theoremstyle{mytheoremstyle}
+\newtheorem*{thm}{Thm.}
+
+\newtheoremstyle{mylemstyle} % name
+	{\topsep}		% Space above
+	{\topsep}		% Space below
+	{\itshape}		% Body font
+	{}			% Indent amount
+	{\bfseries}	% Theorem head font
+	{\textnormal{:}}	% Punctuation after theorem head
+	{.5em}		% Space after theorem head
+	{}			%Theorem headspec
+\theoremstyle{mylemstyle}
+\newtheorem*{lem}{Lem.}
+
+
+\newtheoremstyle{mydefstyle} % name
+	{\topsep}		% Space above
+	{\topsep}		% Space below
+	{\normalfont}	% Body font
+	{}			% Indent amount
+	{\bfseries}	% Theorem head font
+	{\textnormal{:}}	% Punctuation after theorem head
+	{.5em}		% Space after theorem head
+	{}			%Theorem headspec
+\theoremstyle{mydefstyle}
+\newtheorem*{mydef}{Def.}
+\newtheorem*{ex}{E.g.}
+
+\begin{document}
+
+\maketitle
+\pagenumbering{gobble}
+\newpage
+\pagenumbering{arabic}
+
+\subsection{Rice Chapter 2, 44}
+Let $T$ be an exponentional random variable with parameter $\lambda$.   Let $X$ be a discrete random variable defined as $X=k$ if $k \leq T <k+1$, $k=0,1,...$. Find the frequency function of $X$.
+
+\newthought{The exponential} density function is
+\[ f(x)=
+\begin{cases}
+      \lambda e^{-\lambda x},  & \text{if}\ x \geq 0\\
+      0, & \text{if}\ x<0\\
+\end{cases}
+\]
+The random variable $X$ is essentially the space between two consectutive integers on $f(x)$, $k$ and $k+1$.  Therefore, using the CDF of $f(x)$, we can find the frequency function of $X$.
+\[F_T(x)=\int_{0}^{x}f(u)du=1-e^{-\lambda x}\]
+\begin{align*}
+P(k\leq T<k+1) &= P(T \leq k+1) - P(T<k)\\
+&= F_T(k+1) - F_T(k)\\
+&= (1-e^{-\lambda(k+1)}) - (1-e^{-\lambda(k)})\\
+&= -e^{-\lambda k- \lambda}+e^{-\lambda k}\\
+&= -e^{-\lambda k}(e^{-\lambda}-1)
+\end{align*}
+
+So the frequency function of $X$ is $f_X(x)=  -e^{-\lambda x}(e^{-\lambda}-1)$
+
+
+\subsection{Rice Chapter 2, 46}
+$T$ is an exponential random variable, and $P(T<1) = .05$.  What is $\lambda$?
+
+\newthought{Using the CDF} of an exponential random variable, we find...
+\begin{align*}
+p(T<1)&=.05\\
+1-e^(-\lambda) &= .05\\
+-e^(-\lambda) &= -.95\\
+e^(-\lambda) &= \frac{19}{20}\\
+e^{\lambda} &= \frac{20}{19}\\
+\lambda &= \ln(\frac{20}{19})\\
+\lambda &\approx .051
+\end{align*}
+
+
+\subsection{Rice Chapter 3, 8}
+Let $X$ and $Y$ have the joint density
+\[f(x,y) = \frac{6}{7}(x+y)^2 ,\  0\leq x\leq1 ,\ 0\leq y\leq 1\]
+
+\begin{enumerate}
+\item By integrating over the appropriate regions, find (i) $P(X>Y)$, (ii) $P(X+Y \leq 1)$, (iii) $P(X \leq \frac{1}{2})$.]\
+
+\begin{enumerate}
+\item $P(X>Y)$
+\[ P(X>Y) = \int_{-\infty}^{\infty}\int_{-\infty}^{x}f_{XY}dydx \]
+Since the joint density function applies to $0\leq x \leq 1$ set the limit of integration for $X$ to be $0,1$ and $0,x$ for $Y$.
+\begin{align*}
+P(X>Y) &= \int_{0}^{1}\int_{0}^{x}\frac{6}{7}(x+y)^2dydx\\
+&= \int_{0}^{1}\frac{6}{7}[\frac{1}{3}(x+y)^3\Big|_0^x]dx\\
+&= \int_{0}^{1}\frac{6}{7}[\frac{1}{3}(2x)^3 - \frac{1}{3}(x)^3]dx\\
+&= \int_{0}^{1}\frac{6}{7}[\frac{1}{3}7x^3]dx\\
+&=\int_{0}^{1}2x^3dx\\
+&=\frac{1}{2}x^4\Big|_0^1\\
+&= \frac{1}{2}
+\end{align*}
+
+\item $P(X+Y\leq 1)$
+\begin{align*}
+P(X+Y \leq 1) &= \int_{0}^{1}\int_{0}^{1-x}\frac{6}{7}(x+y)^2dydx\\
+&= \int_{0}^{1}\frac{6}{7}[\frac{1}{3}(x+y)^3\Big|_0^{1-x}]dx\\
+&=\int_{0}^{1}\frac{6}{7}[\frac{1}{3}(x+1-x)^3-\frac{1}{3}(x+0)^3]dx\\
+&=\int_{0}^{1}\frac{6}{7}[\frac{1}{3}(1-x^3)]dx\\
+&=\frac{2}{7}[(x-\frac{1}{4}x^4)\Big|_0^1]\\
+&= \frac{3}{14}\\
+\end{align*}
+
+\item $P(X \leq \frac{1}{2})$
+\begin{align*}
+P(X\leq \frac{1}{2}) &=  \int_{0}^{\frac{1}{2}}\int_{0}^{1}\frac{6}{7}(x+y)^2dydx\\
+&= \int_{0}^{\frac{1}{2}}\frac{6}{7}[\frac{1}{3}(x+y)^3\Big|_0^1]dx\\
+&=\int_{0}^{\frac{1}{2}}\frac{6}{7}[\frac{1}{3}((x+1)^3-x^3)]dx\\
+&=\int_{0}^{\frac{1}{2}}\frac{2}{7}[((x+1)^3-x^3)]dx\\
+&= \frac{2}{7}[\frac{1}{4}(x+1)^4-\frac{1}{4}x^4\Big|_0^\frac{1}{2}]\\
+&=\frac{2}{28}[(\frac{3}{2}^4 - \frac{1}{2}^4) - 1]\\
+&=\frac{2}{14}
+\end{align*}
+\end{enumerate}
+
+\item Find the marginal densities of $X$ and $Y$.
+\begin{align*}
+f(y) &= \int_{-\infty}^\infty f(x,y)dx\\
+&=\int_{0}^1 \frac{6}{7}(x+y)^2dx\\
+&=\frac{6}{7}[\frac{1}{3}(x+y)^3\Big|_0^1]\\
+&=\frac{2}{7}(1+y)^3+y^3\\
+&=\frac{2}{7}(3y^2+3y+1) ,\ 0 \leq y \leq 1
+\end{align*}
+
+\begin{align*}
+f(x) &= \int_{-\infty}^\infty f(x,y)dy\\
+&=\int_{0}^1 \frac{6}{7}(x+y)^2dy\\
+&=\frac{6}{7}[\frac{1}{3}(x+y)^3\Big|_0^1]\\
+&=\frac{2}{7}(1+x)^3+x^3\\
+&=\frac{2}{7}(3x^2+3x+1) ,\ 0 \leq x \leq 1
+\end{align*}
+
+\item Find the two conditional densities.
+
+\begin{align*}
+f(x\mid y) &= \frac{f(x,y)}{f(y)}\\
+&=\frac{\frac{6}{7}(x+y)^2}{\frac{2}{7}(3y^2+3y+1)}\\
+&=\frac{3(x+y)^2}{3y^2+3y+1}\\
+\end{align*}
+
+\begin{align*}
+f(y\mid x) &= \frac{f(x,y)}{f(x)}\\
+&=\frac{\frac{6}{7}(x+y)^2}{\frac{2}{7}(3x^2+3x+1)}\\
+&=\frac{3(x+y)^2}{3x^2+3x+1}\\
+\end{align*}
+\end{enumerate}
+
+\subsection{Rice Chapter 3, 14}
+
+Suppose that
+\[f(x,y)=xe^{-x(y+1)}, ,\ 0\leq x <\infty ,\ 0\leq y <\infty \]
+
+\begin{enumerate}
+
+\item Find the marginal density of $X$ and $Y$.  Are $X$ and $Y$ independent?
+
+\marginnote{Switch terms $u = x(-y)-x$ so $du=-xdy$}
+\begin{align*}
+f_X(x) &= \int_0^\infty f_{XY}dy\\
+&= \int_0^\infty xe^{-x(y+1)}dy\\
+&= x\int_0^\infty e^{x(-y)-x}dy\\
+&= -\int_0^\infty e^udu\\
+&= -e^u\Big|_0^\infty\\
+&= -e^{-x(y+1)}\Big|_0^\infty\\
+&= 0-(-e^{-x})\\
+\end{align*}
+So $f_X(x) = e^{-x}$.
+
+To find
+\[ f_Y(y) = \int_0^\infty xe^{-x(y+1)} \]
+We'll integrate by parts, $\int fdg = fg -\int gdf$ where
+\begin{align*}
+f &=x\\
+df &=dx\\
+dg &= e^{x(-y-1)}dx\\
+g &=\frac{e^{x(-y-1)}}{-y-1}
+\end{align*}
+
+\begin{align*}
+f_Y(y)&=\int_0^\infty xe^{-x(y+1)}dx\\
+&= \frac{xe^{x(-y-1)}}{-y-1}\Big|_0^\infty-\frac{1}{-y-1}\int_0^\infty e^{x(-y-1)}dx\\
+\end{align*}
+
+Substitute terms $u=x(-y-1)$ and $du=(-y-1)dx$.
+\begin{align*}
+f_Y(y)&= 0-\frac{1}{(-y-1)^2}\int_0^\infty e^{u}du\\
+&=-\frac{1}{(-y-1)^2}[e^{u}\Big|_0^\infty]\\
+&=\frac{1}{(y+1)^2}
+\end{align*}
+
+Therefore, $f_Y(y)=\frac{1}{(y+1)^2}$.
+
+We say $X,Y$ are independent if $f(x,y)=f(x)f(y)$ but
+\[ xe^{-x(y+1)}\neq \frac{e^{-x}}{(y+1)^2}. \]
+So $X$ and $Y$ are not independent.
+
+\item Find the conditional densities of $X$ and $Y$.
+\begin{align*}
+f(x\mid y) &= \frac{f(x,y)}{f(y)}\\
+&= \frac{xe^{-x(y+1)}}{\frac{1}{(y+1)^2}}\\
+&= (y+1)^2xe^{-x(y+1)}\\
+\end{align*}
+
+\begin{align*}
+f(x\mid y) &= \frac{f(x,y)}{f(x)}\\
+&= \frac{xe^{-x(y+1)}}{e^{-x}}\\
+&= xe^{-xy}
+\end{align*}
+\end{enumerate}
+
+
+\subsection{Question 5}
+The Pareto distributions are a family of distributions of a continuous random variable $X$ with probability density function given by
+\[f(x;\alpha,\theta)=
+\begin{cases}
+      \frac{\alpha\theta^{\alpha}}{x^{\alpha+1}}  & \text{for}\ x \geq \theta\\
+      0 & \text{for}\ x<\theta\\
+\end{cases}
+\]
+
+where $\alpha > 0$ and $\theta > 0$ are the paremeters of the family.  The Pareto distribution arises as a model for the distribution of sizes  of some measured quantity, such as personal or corperate income, or city population, or size of firm, given that it exceeds the threshold $\theta$.
+
+\begin{enumerate}
+\item Verify that this the formula for a density.
+
+\newthought{When} $x > \theta$ we have $f(x)= \frac{\alpha\theta^{\alpha}}{x^{\alpha+1}}$.  To show that this is a density, the integral must sum to $1$.
+
+\begin{align*}
+\int_{-\infty}^\infty f_Xdx &= \int_{-\infty}^\infty \frac{\alpha\theta^{\alpha}}{x^{\alpha+1}}dx\\
+&= \int_\theta^\infty \alpha\theta^{\alpha}x^{-(\alpha+1)}dx\\
+&= \alpha\theta^\alpha[ \frac{-x^{-\alpha}}{\alpha}\Big|_\theta^\infty]\\
+&= \alpha\theta^\alpha[0-(\frac{-1}{\alpha\theta^{\alpha}}]\\
+&= 1
+\end{align*}
+
+\item Find the formula for the cumulative distribution function.
+
+\begin{align*}
+F(x) &= \int_{-\infty}^\infty f(x)dx\\
+&= \int_\theta^x \frac{\alpha\theta^{\alpha}}{x^{(\alpha+1)}}dx\\
+&= \alpha\theta^\alpha \int_\theta^x x^{-(\alpha+1)}dx\\
+&= \alpha\theta^\alpha [\frac{-1}{\alpha x^\alpha}\Big|_\theta^x]\\
+&= 1 - (\frac{\theta}{x})^\alpha\\
+\end{align*}
+\item Assuming $\alpha > 1$, find $E(X)$.  What is $E(X)$ if $0 < \alpha \leq 1$?
+
+\begin{align*}
+E(X) &= \int_{-\infty}^{\infty} xf_X(x)dx\\
+&= \int_\theta^\infty x\frac{\alpha\theta^{\alpha}}{x^{\alpha+1}}dx\\
+&= \alpha\theta^\alpha \int_\theta^x x^{-\alpha}dx\\
+&= \alpha\theta^\alpha [\frac{x^{1-\alpha}}{1-\alpha}\Big|_\theta^\infty]\\
+&= \alpha\theta^\alpha [ \frac{-1}{(\alpha-1)(x^{\alpha-1})}\Big|_\theta^\infty]\\
+&= \alpha\theta^\alpha[0-\frac{-1}{(\alpha-1)(\theta^{\alpha-1})}]\\
+&= \frac{\alpha\theta}{\alpha-1} ,\ \alpha > 1\\
+\end{align*}
+
+When $0 <\alpha \leq 1$ the integral does not converge.  Therefore
+\[ E(X)=
+\begin{cases}
+    \frac{\alpha\theta}{\alpha-1}  & \text{for}\ \alpha > 1\\
+    \text{DNE} & \text{for}\ 0<\alpha \leq1\\
+\end{cases}
+\]
+
+\item Show that if $\alpha >2$, $\Var(X) = \frac{\alpha\theta^2}{(\alpha-1)^2(\alpha-2)}$
+
+
+\[  = E(X^2)-\mu_x^2 \]
+
+Since $\alpha>1$ we already know $E(X)$.  To find $E(X^2)$.
+\begin{align*}
+E(X^2) &= \int_\theta^\infty x^2 \frac{\alpha\theta^{\alpha}}{x^{\alpha+1}}dx\\
+&=\int_\theta^\infty \frac{\alpha\theta^{\alpha}}{x^{\alpha-1}}dx\\
+&= \alpha\theta^{\alpha}[\frac{-1}{(\alpha-2)x^{\alpha-2}}\Big|_\theta^\infty] ,\ \alpha > 2\\
+&=\alpha\theta^{\alpha}[\frac{1}{(\alpha-2)(\theta^{\alpha-2})}]\\
+&= \frac{\alpha\theta^2}{\alpha-2} ,\ \alpha >2\\
+\end{align*}
+
+Plugging what we just found back into the equation for variance, we have...
+\[ \Var(X) = \frac{\alpha\theta^2}{\alpha-2} - \frac{\alpha\theta}{\alpha-1}  \]
+So $\Var(X) = \frac{\alpha\theta^2}{(\alpha-2)(\alpha-1)^2}$ when $\alpha >2$.
+
+\item Find (in terms of $\alpha$ and $\theta$) the median of the distribution of $X$.
+
+\newthought{The median} can be found using the CDF.
+\begin{align*}
+\frac{1}{2} &= 1-(\frac{\theta}{x})^\alpha\\
+\frac{1}{2}&=(\frac{\theta}{x})^\alpha\\
+x^\alpha &= \theta^\alpha\\
+\end{align*}
+
+So $\tilde{\mu} = \theta^\alpha\sqrt{2}$
+
+\item Suppose $X$ has a Pareto distribution with $\alpha=3$ and $\theta=1$.  Find $P(1<X<4)$ and $P(4<X<5)$.
+
+\newthought{Since} $P(1<X<4) = P(X<4)-P(X<1)$ we consider the CDF.
+
+\begin{align*}
+P(X<4)-P(X<1) &= 1-(\frac{1}{4})^3 - (1-(\frac{1}{1})^3)\\
+&=  \frac{63}{64}
+\end{align*}
+
+Similarily, $(P(4<X<5)=\frac{61}{8000}$
+\end{enumerate}
+
+
+\subsection{Question 6}
+Suppose $X$ and $Y$ are independent random variables with $X$ following a uniform distribution on $(0,1)$ and $Y$ exponentially distributed with parameter $\lambda=1$.
+
+\begin{enumerate}
+
+\item Find the density for $Z=X+Y$ (be careful with your limits of integration).  Sketch the density and verify directly that it integrates to 1.  Find the medain (the value of $Z$ for which $P(Z\leq z) = \frac{1}{2}$.
+
+\newthought{The functions} PDFs can be writtin...
+\[ f_X = 1 \]
+and
+\[ f_Y=e^{-y}.\]
+
+Since $X$ and $Y$ are independent we can find the density of using
+\[ f_Z(z) = \int_{-\infty}^{\infty}f_X(z-x)f_Y(y)dy \]
+However, there are two cases to consider since.
+\[ f_x(z-y)=
+\begin{cases}
+        1  & \text{for}\ 0 \leq z-y \leq 1\\
+        0 & \ \text{otherwise}\\
+\end{cases}
+\]
+
+When $0 \leq z \leq 1$ and $z>1$.   For the first we have.
+\begin{align*}
+f_Z(z) &= \int_0^z e^{-y}(1)dy\\
+&= 1-e^{-z} ,\ 0\leq z \leq 1\\
+\end{align*}
+
+When $z>1$, we can say that $z=y$ and we have
+\begin{align*}
+f_Z(z) &= \int_{z-1}^z e^{-y}(1)dy\\
+&= e^{-(z-1)}-e^{-z}\\
+\end{align*}
+
+Therefore the PDF can be written
+\[f_Z(z) =
+\begin{cases}
+    1-e^{-z} & 0 \leq z \leq 1\\
+    e^{-(z-1)}-e^{-z} & z>1\\
+\end{cases}
+\]
+
+\newthought{To verify} this is a formula for a density we take (let $u=-z$ and $s=1-z$.
+\begin{align*}
+\int_0^1  1-e^{-z}  &+ \int_{1}^\infty e^{-(z-1)}-e^{-z}\\
+-\int_0^1 e^{-z} +\int_0^1 1dz &+ -\int_1^\infty e^{-z}dz + \int_1^\infty e^{1-z}\\
+\int_0^1 e^udu + z &+ \int_1^\infty e^{u}du - \int_1^\infty e^{s}ds \\
+[z+ e^{-z}\Big|_0^1] &+ [-(e-1)e^{-z}\Big|_1^\infty]\\
+\end{align*}
+Which equals $1$, verifying an equation for density!
+
+\newthought{Next} we need to find the median.  The familiar way to do this, starts with the CDF.
+
+\begin{align*}
+F_z(z) &= \int_0^1 \int_0^{z-x}f(x,y)dydx\\
+\text{let $y = v-x$}&\\
+&= \int_0^1 \int_0^{z}f(x,v-x)dvdx\\
+&= \int_0^1 \int_0^{z}(1)e^{-(v-x)}dvdx\\
+\text{let $u=x-v$}& \text{ and $du=-dv$}&\\
+&= \int_0^1-\int_x^{z-x}e^ududx\\
+&= \int_0^1[-e^u\Big|_x^{x-z}]dx\\
+&= \int_0^1 (e^z-1)e^{x-z}dx\\
+&= (e^z-1)\int_0^1e^{x-z}dx\\
+\text{now let $u=x-z$}& \text{ and $du=dx$}\\
+&= (e^z-1)\int_{-z}{1-z}^1e^udu\\
+&=(e^z-1)(e^u)\Big|_{-z}^{1-z}\\
+&=(e-1)e^{-z}(e-1)\\
+\end{align*}
+
+Now we solve for $F_z(\tilde{\mu})=\frac{1}{2}$
+\begin{align*}
+(e-1)e^{-z}(e-1) &= \frac{1}{2}\\
+\frac{(e^z-1)}{e^{z}} &= \frac{1}{2(e-1)}\\
+e^{-z} &= 1-\frac{1}{2(e-1)}\\
+e^z &= \frac{1}{1-\frac{1}{2(e-1)}}\\
+z &= -\ln(1-\frac{1}{2(e-1)})\\
+\end{align*}
+
+Hence, $\tilde{\mu}\approx 0.34388$.
+
+\item Find $E(X-Y)$ and $\Var(X-Y)$. Find $E(ZX)$.
+
+\newthought{Since} $X$ and $Y$ are independent, we can find $E(X-Y)=E(X)-E(Y)$.
+
+\begin{align*}
+E(X) &= \int_0^1xf(x)dx\\
+&= \frac{1}{2}\\
+\end{align*}
+and
+\begin{align*}
+E(Y)&= \int_0^\infty ye^{-y}dy\\
+&=-e^{-y}y\Big|_0^\infty + \int_0^\infty e^{-y}dy\\
+&=e^{-y}y\Big|_0^\infty -e^{-y}\Big|_0^{\infty}\\
+&= 1\\
+\end{align*}
+
+So $E(X-Y)=E(X)-E(Y)= \frac{-1}{2}$
+
+\newthought{The variance} of X-Y can be find in a similiar way.
+\[ \Var(X) = E(X^2) - \mu_x^2 \]
+
+So we need find $E(X^2)4$ and $E(Y^2)$.
+
+\begin{align*}
+E(X^2) &= \int_0^1x^2f_x(x)\\
+&= \frac{x^3}{3}\Big|_0^1\\
+&=\frac{1}{3}\\
+\end{align*}
+
+We have $\Var(X) = \frac{1}{3} - \frac{1}{4} = \frac{1}{12}$
+
+Next, find $E(Y^2)$
+\begin{align*}
+E(Y^2) &= \int_0^\infty y^2e^{-y}dy\\
+&= -e^yy^2\Big|_0^\infty + 2\int_0^\infty e^{-y}ydy\\
+&= -2e^{-x}x|\Big|_0^1 + 2e^{-x}\Big|_0^\infty\\
+&=2
+\end{align*}
+
+Now we have $\Var(Y) = 2 - 1=2$.  Therefore $\Var(X-Y)=\frac{-11}{12}$
+
+\newthought{Since} $Z=X+Y$,
+\begin{align*}
+E(ZX)&=E(X^2+XY)\\
+&= E(X^2) + E(XY)\\
+&= E(X^2) + E(X)E(Y)\\
+&= \frac{1}{3} + \frac{1}{2}\\
+&= \frac{5}{6}
+\end{align*}
+
+\end{enumerate}
+\end{document}
+\grid
