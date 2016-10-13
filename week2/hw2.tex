@@ -33,6 +33,7 @@
 
 \newcommand{\dprod}[2]{\langle #1, #2 \rangle}
 \newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
 
 \newtheoremstyle{mytheoremstyle} % name
 	{\topsep}		% Space above
@@ -481,6 +482,155 @@ E(ZX)&=E(X^2+XY)\\
 &= \frac{5}{6}
 \end{align*}
 
+\end{enumerate}
+
+
+\subsection{Question 7}
+For $X$ following a standard normal distribution, find $E(X^3)$ and $E(X^4)$.  For $X\sim N(\mu,\sigma^2)$, find $E(X^3)$ and $E(X^4)$ using your answers for the standard normal and no futher calculus.
+
+The PDF of the standard normal is
+\[\Phi = \frac{e^{-\frac{1}{2}x^2}}{\sqrt{2\pi}}. \]
+
+Also, note that $E(X)=\mu=0$ and $E(X^2) = 1$ , since $1 = E(X^2) - 0$.
+\begin{align*}
+E(X^3)&= \int_{-\infty}^{\infty} x^3\frac{e^{-\frac{1}{2}x^2}}{\sqrt{2\pi}}dx\\
+&=\frac{1}{\sqrt(2\pi}\int_{-\infty}^{\infty}x^3e^{\frac{-x^2}{2}}dx\\
+\text{let $u=x^2$}& \text{ and $du=2xdx$}\\
+&=\frac{1}{2\sqrt(2\pi}\int_{-\infty}^{\infty}ue^{\frac{-u}{2}}du\\
+\end{align*}
+Integrate by parts using $f=u$, $df=du$, and $g=\frac{-1}{e^{\frac{u}{2}}}$
+\begin{align*}
+E(X^3)&=\frac{1}{2\sqrt{2\pi}}([ue^{\frac{-u}{2}}\Big|_{-\infty}^{\infty}]+\int_{-\infty}^{\infty}2e^{\frac{-u}{2}}du)\\
+&=0 + \int_{-\infty}^{\infty}\frac{2e^{-\frac{u}{2}}}{2\sqrt{2\pi}}du\\
+&= \int_{-\infty}^{\infty}\frac{e^{-\frac{u}{2}}}{\sqrt{2\pi}}du\\
+&= 2\int_{-\infty}^{\infty}x\frac{e^{-\frac{x^2}{2}}}{\sqrt{2\pi}}dx\\
+&= 2*E(X)\\
+&= 0\\
+\end{align*}
+
+Now, we'll find $E(X^4)$.  Let $u=\frac{x^2}{2}$ and $du=xdx$.
+
+\begin{align*}
+E(X^4)&=\int_{-\infty}^{\infty} x^4\frac{e^{-\frac{1}{2}x^2}}{\sqrt{2\pi}}dx\\
+&=\frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty}(2u)^{\frac{3}{2}}e^{-u}du\\
+&\text{*since standard normal distribution is symmetric}\\
+&=\frac{2}{\sqrt{2\pi}} \int_{0}^{\infty}(2u)^{\frac{3}{2}}e^{-u}du\\
+&=\frac{2^{\frac{5}{2}}}{\sqrt{2\pi}}\int_{0}^{\infty}(u)^{\frac{5}{2}-1}e^{-u}du\\
+&=\frac{2^{\frac{5}{2}}}{\sqrt{2\pi}}\Gamma(\frac{5}{2})\\
+&= \frac{4\sqrt{2}}{\sqrt{2}\sqrt{\pi}} \frac{3\sqrt{\pi}}{4}\\
+&= 3
+\end{align*}
+
+\newthought{For} $X\sim(\mu,\sigma^2)$, $E(X^3)=0$ and $E(X^4)=3\sigma^4$.  Admittedly, I'm not sure how or why from my answers above.  I imagine that since standard deviation will be a constant it will just fall out of the intergrals...
+
+
+\subsection{Question 8}
+Consider a Poisson process with paremter $\lambda$.  Let $X$ be the number of events in $(0,t_2]$ and $Y$ the number of events in $(t_1,t_3]$ for $0<t_1<t_2<t_3$ so that the intervals are guaranteed to overlap.
+
+\begin{enumerate}
+\item Find the mean and variance of $X-Y$.
+
+\newthought{Consider first} the expected values of $X$ and $Y$, independently.
+
+\begin{align*}
+E(X)&= \sum_{k=0}^\infty \frac{k\lambda(t_2)^k}{k!}e^{-\lambda(t_2)}\\
+&= [\lambda(t_2)]e^{-\lambda(t_2)} \sum_{k=1}^\infty\frac{[\lambda(t_2)]^{k-1}}{(k-1)!}\\
+&=[\lambda(t_2)]e^{-\lambda(t_2)} \sum_{j=1}^\infty\frac{[\lambda(t_2)]^{j}}{(k-1)!}\\
+&=[\lambda(t_2)]e^{-\lambda(t_2)}e^{\lambda t_2}\\
+&= \lambda(t_2)
+\end{align*}
+
+For $E(Y)$ we can following the same process, resuling in
+
+\begin{align*}
+E(Y) &= \lambda(t_3-t_1).\\
+\end{align*}
+
+So
+\begin{align*}E(Y)-E(X)=\lambda(t_3-t_1)-\lambda(t_2)
+\end{align*}
+
+The variance is defined.
+\[ \Var(Y-X) = \Var(Y)-\Var(X)-2\Cov(X,Y) \]
+We can use the the moment generating function for the Poisson distribution.
+\begin{align*}
+M(t) &= \sum_{k=0}^\infty e^{tk}\frac{\lambda^k}{k!}e^{-\lambda}\\
+&= \sum_{k=0}^\infty \frac{(\lambda e^t)^k}{k!}e^{-\lambda}\\
+&= e^{-\lambda}e^{\lambda(e^{t}-1)}\\
+&= e^{\lambda(e^t-1)}\\
+\end{align*}
+
+Now differentiate
+\begin{align*}
+M'(t)&=\lambda e^te^{\lambda(e^t-1)}\\
+M''(t)&= \lambda e^te^{\lambda(e^t-1)} + \lambda^2e^{2t}e^{\lambda(e^t-1)}\\
+\end{align*}
+
+We already know the value at the first moment $E(X)$ so just evualate the second derivative at $t=0$.
+
+\[ E(X^2)= (\lambda t_2)^2 + \lambda t_2 \]
+
+Therefore we have
+
+\[ \Var(X) = E(X^2)- [E(X)]^2 = \lambda t_2. \]
+
+Similarily
+
+\[ \Var(Y) = E(Y^2)-[E(X)]^2 = \lambda(t_3-t_1). \]
+
+It remains to find $\Cov(XY)$.
+\[ \Cov(X,Y) = E(XY) - E(X)E(Y) \]
+
+The last item to find is $E(XY)$.  The joint PMF
+\[ p_k= \frac{[\lambda(t_2-t_1)]^ke^{-[\lambda(t_2-t_1)]}}{k!} \]
+
+Using the same methods for find the $E(X)$ and $E(Y)$
+
+\[ E(XY) = \lambda(t_2-t_1) \]
+
+Plugging values in
+\begin{align*}
+\Cov(X,Y) = \lambda(t_2-t_1) - \lambda(t_3-t_1)\lambda(t_2)
+\end{align*}
+
+So
+\begin{align*}
+\Var(Y-X) &= \Var(Y) - \Var(X) - 2\Cov(X,Y)\\
+&= \lambda(t_3-t_1) - \lambda t_2 - 2[\lambda(t_2-t_1) - \lambda^2(t_3-t_1)(t_2)]\\
+\end{align*}
+
+\item Find $E(Y \mid X)$. Verify that $E[E(Y\mid X)]$ equals $E(Y)$.
+
+\newthought{In general} $P(Y\mid X) = \frac{P(X,Y)}{P(Y)}$.  In this case, if $p$ is the PMF of the Poisson distribution.
+\[p_{Y\mid X} = \frac{p_{XY}}{p_Y} \]
+
+\begin{align*}
+p_{XY} &= \frac{(t_2\lambda)^xe^{-(t_2)\lambda}}{x!}\frac{[(t_3-t_1)\lambda]^{y-x}e^{-(t_3-t_1)\lambda}}{(y-x)!}\\
+\end{align*}
+
+The conditional expection of $Y$ given $X$ is
+\[ E(Y \mid X) = \sum_y yp_{Y\mid }(y\mid x) \]
+
+\begin{align*}
+p_{Y\mid X}(y\mid n)&=\frac{(t_2\lambda)^xe^{-(t_2)\lambda}}{x!}\frac{[(t_3-t_1)\lambda]^{y-x}e^{-(t_3-t_1)\lambda}}{(y-x)!}\\
+&*\frac{1}{ \frac{[(t_3-t_1)\lambda]^{y-x}e^{-(t_3-t_1)\lambda}}{(y!)}}\\
+&= \frac{x!}{x!(y-x!)}t_2^x(t_3-t_1)^{y-x}\\
+\end{align*}
+
+\newthought{The last} thing to do is verifty $E[Y\mid X = E(Y)$.
+
+\begin{align*}
+E[E(Y\mid X)]&= \sum_y yP_{Y\mid X}(y\mid x)\\
+&= \sum_y y \frac{x!}{x!(y-x!)}t_2^x(t_3-t_1)^{y-x}\\
+E[E(Y\mid X)] \sum_xp_X(x) &= \sum_y y \sum_x \frac{x!}{x!(y-x!)}t_2^x(t_3-t_1)^{y-x}p_X(x)\\
+\end{align*}
+The law of total probability states
+\[ p_Y(y) = \sum_xp_{Y\mid X}(y \mid x) p_{X}(x) \]
+So
+\begin{align*}
+\sum_y y \sum_x \frac{x!}{x!(y-x!)}t_2^x(t_3-t_1)^{y-x}p_X(x)&=\sum_y p_y(Y)\\
+&= E(Y)\\
+\end{align*}
 \end{enumerate}
 \end{document}
 \grid
