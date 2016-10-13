@@ -471,7 +471,7 @@ E(Y^2) &= \int_0^\infty y^2e^{-y}dy\\
 &=2
 \end{align*}
 
-Now we have $\Var(Y) = 2 - 1=2$.  Therefore $\Var(X-Y)=\frac{-11}{12}$
+Now we have $\Var(Y) = 2 - 1=1$.  Therefore $\Var(X-Y)=\frac{-11}{12}$
 
 \newthought{Since} $Z=X+Y$,
 \begin{align*}
@@ -628,7 +628,7 @@ The law of total probability states
 \[ p_Y(y) = \sum_xp_{Y\mid X}(y \mid x) p_{X}(x) \]
 So
 \begin{align*}
-\sum_y y \sum_x \frac{x!}{x!(y-x!)}t_2^x(t_3-t_1)^{y-x}p_X(x)&=\sum_y p_y(Y)\\
+\sum_y y \sum_x \frac{x!}{x!(y-x!)}t_2^x(t_3-t_1)^{y-x}p_X(x)&=\sum_y yp_Y(y)\\
 &= E(Y)\\
 \end{align*}
 \end{enumerate}
