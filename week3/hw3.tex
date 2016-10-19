@@ -1,0 +1,260 @@
+\documentclass{tufte-book}
+
+\usepackage{amsmath, amsthm}
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{graphics/}}
+
+\title{STATS 244 \\ Homework 3}
+\author{Joe Seidel}
+\date{\today}
+
+\usepackage{booktabs}
+\usepackage{units}
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\usepackage{multicol}
+\usepackage{lipsum}
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usepackage{wasysym}
+
+\newcommand{\doccmd}[1]{\texttt{\textbackslash#1}}% command name -- adds backslash automatically
+\newcommand{\docopt}[1]{\ensuremath{\langle}\textrm{\textit{#1}}\ensuremath{\rangle}}% optional command argument
+\newcommand{\docarg}[1]{\textrm{\textit{#1}}}% (required) command argument
+\newenvironment{docspec}{\begin{quote}\noindent}{\end{quote}}% command specification environment
+\newcommand{\docenv}[1]{\textsf{#1}}% environment name
+\newcommand{\docpkg}[1]{\texttt{#1}}% package name
+\newcommand{\doccls}[1]{\texttt{#1}}% document class name
+\newcommand{\docclsopt}[1]{\texttt{#1}}% document class option name
+\DeclareMathOperator{\proj}{proj}
+\newcommand{\vct}{\mathbf}
+
+
+\newcommand{\dprod}[2]{\langle #1, #2 \rangle}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+
+\newtheoremstyle{mytheoremstyle} % name
+	{\topsep}		% Space above
+	{\topsep}		% Space below
+	{\itshape}		% Body font
+	{}			% Indent amount
+	{\bfseries}	% Theorem head font
+	{\textnormal{:}}	% Punctuation after theorem head
+	{.5em}		% Space after theorem head
+	{}			%Theorem headspec
+\theoremstyle{mytheoremstyle}
+\newtheorem*{thm}{Thm.}
+
+\newtheoremstyle{mylemstyle} % name
+	{\topsep}		% Space above
+	{\topsep}		% Space below
+	{\itshape}		% Body font
+	{}			% Indent amount
+	{\bfseries}	% Theorem head font
+	{\textnormal{:}}	% Punctuation after theorem head
+	{.5em}		% Space after theorem head
+	{}			%Theorem headspec
+\theoremstyle{mylemstyle}
+\newtheorem*{lem}{Lem.}
+
+
+\newtheoremstyle{mydefstyle} % name
+	{\topsep}		% Space above
+	{\topsep}		% Space below
+	{\normalfont}	% Body font
+	{}			% Indent amount
+	{\bfseries}	% Theorem head font
+	{\textnormal{:}}	% Punctuation after theorem head
+	{.5em}		% Space after theorem head
+	{}			%Theorem headspec
+\theoremstyle{mydefstyle}
+\newtheorem*{mydef}{Def.}
+\newtheorem*{ex}{E.g.}
+
+\begin{document}
+
+\maketitle
+\pagenumbering{gobble}
+\newpage
+\pagenumbering{arabic}
+
+\subsection{Rice Chapter 4, Question 78}
+Show that if a density is symmetric about zero, its skewness is zero.
+
+\newthought{Skewness} can be determined using $E(X^3)$.   For example if $E(X^3)$ is zero, then skewness is zero.
+
+Let $f_y$ be a density symmetric around zero.  Then, because of this symmetry $-f_Y = f_y$.  Which implies $E(Y^3) = E(-Y^3)$  Which means that $E(Y^3)=0$.
+
+\subsection{Question 2}
+Consider the bivariate density of $X$ and $Y$
+\[f(x,y) = 4(x+y+xy)/5 \text{ for } 0< x,y <1 ,\ 0 \text{ otherwise} \]
+
+\begin{enumerate}
+
+\item Verify that this is a bivariate density\\
+(the total volume of $\int\int f(x,y)dxdy =1$).
+
+\begin{align*}
+\int \int f(x,y)dxdy &= \int_0^1 \int_0^1 \frac{4}{5}(x+y+xy)dxdy\\
+&= \int_0^1 [\frac{4}{5} (\int_0^1 x+y+xy dx)]dy\\
+&= \int_0^1 [\frac{4}{5} (\int_0^1 xdx + \int_0^1ydx + \int_0^1 xydx)]dy\\
+&= \int_0^1 [\frac{4}{5} (\frac{x^2}{2}\big|_0^1 + y + y(\frac{x^2}{2}\big|_0^1))]dy\\
+&= \int_0^1 [\frac{4}{5} (\frac{1}{2} + 1 \frac{y}{2})]dy\\
+&= \int_0^1 \frac{4}{5}(\frac{3y}{2} + \frac{1}{2})dy\\
+&= \int_0^1 \frac{4}{10}(3y + 1) dy\\
+&= \frac{4}{10} [\int_0^1 3ydy + \int_0^1 1 dy]\\
+&= \frac{4}{10} [3(\frac{1}{2}) + 1]\\
+&= \frac{4}{10} [\frac{3}{2} + 1]\\
+&= 1\\
+\end{align*}
+
+\item Find the marginal density of $Y$
+\marginnote{We basically found this in a step from part 1}
+\begin{align*}
+f_Y(y) &= \int_0^1 f_{XY}(x,y)dx\\
+&= \int_0^1 \frac{4}{5}(x+y+xy)dx\\
+&= \frac{4}{5} \int_0^1(x+y+xy)dx\\
+&= \frac{4}{10}(3y+1)\\
+\end{align*}
+
+\item Find the conditional density of $X$ given $Y=0.5$.
+
+\begin{align*}
+f_{X\mid Y}(x \mid Y=.5) &= \frac{f(x,.5)}{f_y(.5)}\\
+&= \frac{\frac{4}{5}(x + .5 +.5x)}{\frac{4}{10}(2.5)}\\
+&= \frac{4}{5}(1.5x + .5)\\
+\end{align*}
+
+\item Find $E(X)$, $E(X^2)$, $\Var(X)$, $E(XY)$, $\Cov(X,Y)$.
+
+\begin{align*}
+E(X) &= \int_0^1 x f_X(x) dx\\
+&= \int_0^1 x \frac{4}{10}(3x+1)dx\\
+&= \frac{4}{10}[\int_0^1 3x^2+xdx]\\
+&= \frac{4}{10}[\int_0^1 3x^2dx + \int_0^1xdx]\\
+&= \frac{4}{10}[1 + \frac{1}{2}]\\
+&= \frac{3}{5}\\
+\end{align*}
+
+\begin{align*}
+E(X^2) &= \int_0^1 x^2 f_X(x)dx\\
+&= \int_0^1 x^2 \frac{4}{10}(3x+1)dx\\
+&= \frac{4}{10} \int_0^1 3x^3 + x^2 dx\\
+&= \frac{4}{10} [\frac{3}{4}x^3\Big|_0^1 + \frac{x^3}{3}\Big|_0^1]\\
+&= \frac{4}{10} (\frac{3}{4} + \frac{1}{3})\\
+&= \frac{13}{30}
+\end{align*}
+
+\begin{align*}
+\Var(X) &= E(X^2) - E(X)^2\\
+&= \frac{13}{30} - \frac{3}{5}^2\\
+&= \frac{11}{150}
+\end{align*}
+
+\begin{align*}
+E(XY) &= \int_0^1 \int_0^1 xy f(x,y) dxdy\\
+&= \int_0^1 \int_0^1 xy \frac{4}{5}(x+y+xy)dxdy\\
+&= \int_0^1 [\frac{4}{5}\int_0^1 xy(x + y +xy)dx]dy\\
+&= \int_0^1 [\frac{4}{5}y(\int_0^1(x^2 + xy + x^2y)dx]dy\\
+&= \int_0^1 [\frac{4}{5}y(\frac{1}{3} + y(\frac{1}{2}) + y(\frac{1}{3})]dy\\
+&= \int_0^1 \frac{4}{15}y(\frac{5y}{2}+1)dy\\
+&= \frac{4}{15} \int_0^1 \frac{5y^2}{2} + y dy\\
+&= \frac{4}{15}[\frac{5}{6} + \frac{1}{2}]\\
+&= \frac{16}{45}\\
+\end{align*}
+
+We should note that because the marginal density of $X$ and $Y$ are symmetric(?) $E(X)=E(Y)=\frac{3}{5}$.  In anycase, we don't need to compute $E(Y)$ since the marginal densities look the same.
+
+\begin{align*}
+\Cov(X,Y) &= E(XY) - E(X)E(Y)\\
+&= \frac{16}{45} - \frac{3}{5}^2\\
+&= -\frac{1}{225}\\
+\end{align*}
+
+\item Find $P(0.2 \leq X \leq .5 \text{ and } .4 \leq Y \leq .8)$
+\marginnote{I asked for a clarification on this question on the discussion board and no one answered!  The CPR rule takes effect, which says if there is no response, the affirmative is implied.  It's a gamble, but whatever.  There are many cases where I would NOT employ this rule.}
+
+\begin{align*}
+P(0.2 \leq X \leq .5 \text{ and } .4 \leq Y \leq .8) &= \int_{.4}^{.8} \int_{.2}^{.5} f(x,y)dxdy\\
+&= \int_{.4}^{.8} \int_{.2}^{.5} \frac{4}{5}(x + y + xy)dxdy\\
+&= \int_{.4}^{.8}[\frac{4}{5} \int_{.2}^{.5} x+y+xy dx]dy\\
+&= \int_{.4}^{.8}[\frac{4}{5}(.405y  + .105)dy\\
+&= \frac{4}{5}(.0972 + .042)\\
+&= .11136\\
+\end{align*}
+\item Find $P(X + Y \leq 1)$
+Set $y=v-x$
+\begin{align*}
+P(X + Y \leq 1) &= \int_0^y \int_0^xf(x,v)dxdv\\
+\int_0^1 \int_0^{1-x} f(x,y)dydx\\
+&= \int_0^1 \int_0^{1-x} \frac{4}{5}(x+y+xy)dydx\\
+&= \int_0^1[\frac{4}{5}(\int_0^{1-x}xdy + \int_0^{1-x}ydy + x\int_0^{1-x}ydy)]dx\\
+&=\int_0^1 \frac{4}{5}[-(1-x)x + \frac{1}{2}(x-1)^2+ \frac{1}{2}(x-1)^2x +]dx\\
+&=\int_0^1 \frac{4}{10}(x^3 - 3x^2 + x +1)dx\\
+&= \frac{4}{10}[\frac{1}{4} - 1 + \frac{1}{2} +1]\\
+&= \frac{3}{10}
+\end{align*}
+\end{enumerate}
+
+
+\subsection{Question 3, Rice 4.81 and 4.82}
+
+\begin{enumerate}
+
+\item Find the moment-generating function of a Bernoulli random variable, and use it to find the mean, variance, and third moment.
+
+\newthought{A Bernoulli} random variable is one such that $f(x) = 1-p$ where $f(0) = 1-p$ and $f(1) = p$.
+
+\begin{align*}
+M(t) &= \sum e^{tx} f(x)\\
+&= e^{t(0)}f(0) + e^{t(1)}f(1)\\
+&= e^{t(0)}(1-p) + e^{t(1)}(p)\\
+&= 1-p + e^tp\\
+\end{align*}
+
+To find the first, second and third moments, take the following derivivative of $M(t)$.
+\begin{align*}
+M'(t) &= pe^{t}\\
+M''(t) &= pe^{t}\\
+M'''(t) &= pe^{t}\\
+\end{align*}
+
+Evauluating each of these at $0$ gives us our moments, respectively.
+\begin{align*}
+E(X) &= p \\
+E(X^2) &= p\\
+E(X^3) &= p\\
+\end{align*}
+
+We also need find the variance.
+\[ \Var(X) = E(X^2) - E(X)^2 = p - p^2 \]
+If we let $q = 1-p$ then $\Var(X) = p(1-p) = pq$
+
+\item Use the result of Problem 81 to find the mgf of a binomial random variable and its mean and variance.
+
+\newthought{LET} $X_1, X_2, X_3,...,X_n$ be independently and identically distributed Bernoulli random variables with paremeter $p$.
+
+Let $Y=X_1+X_2+X_3,...,X_n$, so $Y=\sum_{i=1}^nX_i$.  Then
+
+\begin{align*}
+M_Y(t) &= E(e^{ty})\\
+&= E(e^{(tx_1 + tx_2+...+tx_n)})\\
+&= E(e^{tx_1})E(e^{tx_2})...E(e^{tx_n})\\
+&= M_{x_1}(t)M_{x_2}(t)...M_{x_n}(t)\\
+&= (1-p + pe^t)^n
+\end{align*}
+
+Now we take the first and second derivates of $M_Y(t)$ in order to find the first and second moments.
+
+\begin{align*}
+M_Y'(t) &= \frac{d}{dt}(1-p+e^tp)^n\\
+&= n(1-p+e^tp)^{n-1} \frac{d}{dt}(1-p+e^tp)\\
+&= n(1-p+e^tp)^{n-1} e^{t}p\\
+&= npe^t(1-p+pe^t)^{n-1}\\
+\end{align*}
+
+\end{enumerate}
+\end{document}
+\grid
