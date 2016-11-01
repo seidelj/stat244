@@ -146,9 +146,59 @@ Which give us a $N(82.8, 23.4)$ posterier distribution and means posterior of ex
 
 .3792
 
-
 \end{enumerate}
 
+
+\subsection{Question 3}
+A "psychic" uses a five-card deck of cards to demenonstrate ESP, and claims to be able to guess a card correctly with probability .5.  A single experiment consists of making five guesses, reshuffling the deck after each guess.  The experiment is treid and the "pyschic" guesses correctly 3 times out of give.  Assuming the only two possibilities are "ESP" and "ordinary guessing", how how must the a priori ability be that "psychic" has ESP is at alteast .7?
+
+\newthought{Given} that the psychic claims probability of .5 we can call this $f(\theta) \sim Beta(1,1)$ and $f(x\mid \theta) \sim Bin(5, \theta)$  From, observing $k=3$ correct guesses we get the result that $f(\theta \mid x) \sim Bin(4,3)$.  However, we want to know what the prior probability would have needed to be in order for the pyschic to have atleast $.7$.
+
+To have a probability of atleast $.7$ we'd need something like $Beta(7,3)$ distribution.  So the a priori distribution should be something like $Beta(4,1)$ which means atleast .8 probability is required.
+
+\subsection{Question 4}
+
+Suppose $\hat{\theta}_1$ and $\hat{\theta}_2$ are uncorrelated and both are unbiased estimators of $\theta$, and that $\Var(\hat{\theta}_1) = 2\Var(\hat{\theta}_2)$.
+
+\begin{enumerate}
+
+\item Show that for any constant $c$, the weighted average $\hat{\theta}_3 = c\hat{\theta}_1 + (1-c)\hat{\theta}_2$ is an unbiased estimator of $\theta$.
+
+\begin{align*}
+E(\hat{\theta}_3) &= cE(\hat{\theta}_1) + (1-c)E(\hat{\theta}_2)\\
+&= c\theta + (1-c)\theta\\
+&= \theta\\
+\end{align*}
+
+Hence $B(\hat{\theta}_3) = 0$.
+
+\item Find $c$ for which $\hat{\theta}_3$ has the smallest MSE.
+
+The MSE of $\hat{\theta}_3$ is
+
+\[ c^2Var(\hat{\theta}_1) + (1-c)^2\Var(\hat{\theta}_2) \]
+
+We can find the value, $c$, that minimizes MSE by differentation.
+
+\begin{align*}
+\frac{d}{dc} MSE(\hat{\theta}_2) &= 2cVar(\hat{\theta_1}) - 2Var(\hat{\theta_2})(1-c)\\
+&= 2cVar(\hat{\theta_1}) - Var(\hat{\theta_1})(1-c)\\
+&= 3cVar(\hat{\theta_1}) - Var(\hat{\theta_1})\\
+\end{align*}
+
+Setting the above equal to $0$ results in $c=\frac{1}{3}$.  Furthermore, the second derivative of the MSE is positive so we can confirm that $c$ minimizes.
+
+\item Are there any values of $c$, $0 \leq c \leq 1$ for which $\hat{\theta}_3$ is better (in the sense of MSE) than both $\hat{\theta}_1$ and $\hat{\theta}_2$
+
+\newthought{We are} given that $\Var(\hat{\theta}_2)$ is less than $\Var(\hat{\theta}_1)$.  Since the bias as zero, the MSE is just the variance of each estimator.
+
+\begin{align*}
+\text{MSE }\hat{\theta}_3 &= c^2Var(\hat{\theta}_1) + (1-c)^2\Var(\hat{\theta}_2)\\
+&= c^2 2\Var(\hat{\theta}_2) + (1-c)^2\Var(\hat{\theta}_2)\\
+&=
+\end{align*}
+
+\end{enumerate}
 
 \end{document}
 \grid
