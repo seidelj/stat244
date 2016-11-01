@@ -80,7 +80,74 @@
 \newpage
 \pagenumbering{arabic}
 
+\subsection{Question 1}
+Let $Z \sim N(0,1)$, a stand normal distribution and let $X \sim N(\mu \sigma^2)$.  Let $\Phi(z)$ be the cdf of $Z$.  Suppose $X \sim N(-4, 16)$; find.
 
+It helps to know that
+\[ P(X < x) = \Phi\Big(\frac{x-\mu}{\sigma}\Big). \]
+
+\begin{enumerate}
+\item $P(X > 2)$.
+\begin{align*}
+P(X > 2) &= 1 - P(X < 2)
+&= 1 - \Phi\Big(\frac{2- (-4)}{\sqrt{16}}\Big)\\
+&= 1 - .9332\\
+&= .0688\\
+\end{align*}
+
+\item $P(0 < X < 4)$
+\begin{align*}
+    P(0 < X < 4) &= P(X<4) - P(X<0)\\
+    &= \Phi\Big(\frac{4 -(-4)}{4}\Big) - \Phi\Big(\frac{0 -(-4)}{4}\Big) \\
+    &= .1539
+\end{align*}
+
+\item $P(|X+3| \geq 3)$
+\begin{align*}
+    P(|X+3| \geq 3) &= P(X \geq 0) + P(X \leq -6)\\
+    &= 1-\Phi\Big(\frac{4}{4}\Big) + \Phi\Big(\frac{-2}{4}\Big)\\
+    &= .1587 + .3085\\
+    &= .4672
+\end{align*}
+
+\item $P(X \leq 0 \text{ or } X \geq 3)$
+\begin{align*}
+    P(X \leq 0 \text{ or } X \geq 3) &= P(X \leq 0) + P(X \geq 3)\\
+    &= \Phi\Big(\frac{4}{4}\Big) + 1 - \Phi\Big(\frac{7}{4}\Big)\\
+    &= .8413 + .0003\\
+    &= .8416\\
+\end{align*}
+
+\end{enumerate}
+
+
+\subsection{Question 2}
+Based on student A's performace during the first two weeks of a course, the professor has approximately a normal $N(70, 8^2)$ prior distribution about the student's true ability, on a scale of 0 to 100.  Consider the midterm examination as an error-prone measure of the student's true ability, where if the true ability is $x$, the examination score can be modeled as approximately normally distributed, $N(x,6^2)$.  The student scores 90 on the midterm.
+
+\begin{enumerate}
+\item What are the posterior expectaion and the probability that the student's true ability is above 85?
+
+\newthought{We have} the following information.
+    \[f(\theta) \sim N(70, 8^2) \]
+ and
+    \[f(x\mid \theta)\sim N(x, 6^2)\]
+
+Using Bayes, $f(\theta\mid X) \propto f(x\mid \theta)f(\theta)$ the posterior distribution is
+
+\[ (\theta\mid X) = \frac{1}{\sqrt{2\pi}B}e^{\frac{(\theta-A)^2}{2B^2}} \]
+Where
+\[ A = \frac{6^2(70) + 8^2(90)}{6^2 + 8^2} \]
+and
+\[B^2 = \frac{6^2*8^2}{6^2 + 8^2} \]
+
+Which give us a $N(82.8, 23.4)$ posterier distribution and means posterior of expectation of the student's true ability it $82.8$.  Using the the method from question 1, there is a .4625 probability that the students true ability is above $85$.
+
+\item Above 90?
+
+.3792
+
+
+\end{enumerate}
 
 
 \end{document}
