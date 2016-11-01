@@ -1,0 +1,87 @@
+\documentclass{tufte-book}
+
+\usepackage{amsmath, amsthm}
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{graphics/}}
+
+\title{STATS 244 \\ Homework 4}
+\author{Joe Seidel}
+\date{\today}
+
+\usepackage{booktabs}
+\usepackage{units}
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\usepackage{multicol}
+\usepackage{lipsum}
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usepackage{wasysym}
+
+\newcommand{\doccmd}[1]{\texttt{\textbackslash#1}}% command name -- adds backslash automatically
+\newcommand{\docopt}[1]{\ensuremath{\langle}\textrm{\textit{#1}}\ensuremath{\rangle}}% optional command argument
+\newcommand{\docarg}[1]{\textrm{\textit{#1}}}% (required) command argument
+\newenvironment{docspec}{\begin{quote}\noindent}{\end{quote}}% command specification environment
+\newcommand{\docenv}[1]{\textsf{#1}}% environment name
+\newcommand{\docpkg}[1]{\texttt{#1}}% package name
+\newcommand{\doccls}[1]{\texttt{#1}}% document class name
+\newcommand{\docclsopt}[1]{\texttt{#1}}% document class option name
+\DeclareMathOperator{\proj}{proj}
+\newcommand{\vct}{\mathbf}
+
+
+\newcommand{\dprod}[2]{\langle #1, #2 \rangle}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+
+\newtheoremstyle{mytheoremstyle} % name
+	{\topsep}		% Space above
+	{\topsep}		% Space below
+	{\itshape}		% Body font
+	{}			% Indent amount
+	{\bfseries}	% Theorem head font
+	{\textnormal{:}}	% Punctuation after theorem head
+	{.5em}		% Space after theorem head
+	{}			%Theorem headspec
+\theoremstyle{mytheoremstyle}
+\newtheorem*{thm}{Thm.}
+
+\newtheoremstyle{mylemstyle} % name
+	{\topsep}		% Space above
+	{\topsep}		% Space below
+	{\itshape}		% Body font
+	{}			% Indent amount
+	{\bfseries}	% Theorem head font
+	{\textnormal{:}}	% Punctuation after theorem head
+	{.5em}		% Space after theorem head
+	{}			%Theorem headspec
+\theoremstyle{mylemstyle}
+\newtheorem*{lem}{Lem.}
+
+
+\newtheoremstyle{mydefstyle} % name
+	{\topsep}		% Space above
+	{\topsep}		% Space below
+	{\normalfont}	% Body font
+	{}			% Indent amount
+	{\bfseries}	% Theorem head font
+	{\textnormal{:}}	% Punctuation after theorem head
+	{.5em}		% Space after theorem head
+	{}			%Theorem headspec
+\theoremstyle{mydefstyle}
+\newtheorem*{mydef}{Def.}
+\newtheorem*{ex}{E.g.}
+
+\begin{document}
+
+\maketitle
+\pagenumbering{gobble}
+\newpage
+\pagenumbering{arabic}
+
+
+
+
+\end{document}
+\grid

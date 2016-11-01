@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 fig, ax=plt.subplots(1,1)
 
-a,b = 4, 98
+a,b = 1, 2
 
 mean, var, skew, kurt = beta.stats(a,b, moments='mvsk')
 
