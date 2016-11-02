@@ -195,12 +195,12 @@ The MSE of $\hat{\theta}_3$ is
 
 \[ c^2\Var(\hat{\theta}_1) + (1-c)^2\Var(\hat{\theta}_2) \]
 
-We can find the value, $c$, that minimizes MSE by differentation.
+We can find the value, $c$, that minimizes MSE by evaulating.
 
 \begin{align*}
-\frac{d}{dc} MSE(\hat{\theta}_2) &= 2cVar(\hat{\theta_1}) - 2Var(\hat{\theta_2})(1-c)\\
-&= 2cVar(\hat{\theta_1}) - Var(\hat{\theta_1})(1-c)\\
-&= 3cVar(\hat{\theta_1}) - Var(\hat{\theta_1})\\
+MSE(\hat{\theta}_3) &= c^2\Var(\hat{\theta}_1) + (1-c)^2\Var(\hat{\theta}_2)\\
+&=c^2 2\Var(\hat{\theta}_2) + (1-c)^2\Var(\hat{\theta}_2)\\
+&=\Var(\hat{\theta}_2)(3c^2 - 2c + 1)\\
 \end{align*}
 
 Setting the above equal to $0$ results in $c=\frac{1}{3}$.  Furthermore, the second derivative of the MSE is positive so we can confirm that $c$ minimizes.
