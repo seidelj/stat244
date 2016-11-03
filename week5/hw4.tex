@@ -360,15 +360,15 @@ B(\hat{\theta}) &= E(X) - \theta\\
 
 $c = \frac{2 \theta}{1 + \theta}$
 
-Just a reminder, bias is $0$ so just find variance.
+Just \marginnote{The MSE may not be right since when $\theta<1$ MSE is negative} a reminder, bias is $0$ so just find variance.
 \begin{align*}
 \MSE(cX) &= c^2\Var(X)\\
-&=  \frac{\theta^2 -1}{3}
+&=  \frac{\theta^3 -\theta^2}{3(1+\theta)}
 \end{align*}
 
 \item Among all the estimates of $\theta$ of the form $cX$, is there a choice of $c$ that minimizes the resulting MSE for all $\theta$.  If yes, find the value of $c$. If not, explain why not.
 
-There is not.  Since, $c$ is a function of $\theta$ and we observe that our baised estimate of $\theta$ has a smaller mse than $cX$,  there is no way to minimize mse for all $\theta$.  The graph below shows that when $\theta$ is less than $1$ $cX$ does better, however as $\theta$ increases, $X$ starts to get better.
+There is not.  Since, changing the value of $c$ for MSE, will depend on the value of $\theta$.  Considering the previous items, there is an issue when $\theta <1$ because MSE should not be negative.  However, when $\theta>1$ our unbaised $cX$ begins to do better.  The graph below shows that when $\theta$ is less than $1$ $cX$ does better, however as $\theta$ increases, $X$ starts to get better.  Suggesting there is no way to minimize mse for all $\theta$.
 
 \includegraphics{q7}
 
