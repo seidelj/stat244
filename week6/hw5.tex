@@ -1,0 +1,156 @@
+\documentclass{tufte-book}
+
+\usepackage{amsmath, amsthm}
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{graphics/}}
+
+\title{STAT 244 \\ Homework 5}
+\author{Joe Seidel}
+\date{\today}
+
+\usepackage{booktabs}
+\usepackage{units}
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\usepackage{multicol}
+\usepackage{lipsum}
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usepackage{wasysym}
+
+\newcommand{\doccmd}[1]{\texttt{\textbackslash#1}}% command name -- adds backslash automatically
+\newcommand{\docopt}[1]{\ensuremath{\langle}\textrm{\textit{#1}}\ensuremath{\rangle}}% optional command argument
+\newcommand{\docarg}[1]{\textrm{\textit{#1}}}% (required) command argument
+\newenvironment{docspec}{\begin{quote}\noindent}{\end{quote}}% command specification environment
+\newcommand{\docenv}[1]{\textsf{#1}}% environment name
+\newcommand{\docpkg}[1]{\texttt{#1}}% package name
+\newcommand{\doccls}[1]{\texttt{#1}}% document class name
+\newcommand{\docclsopt}[1]{\texttt{#1}}% document class option name
+\DeclareMathOperator{\proj}{proj}
+\newcommand{\vct}{\mathbf}
+
+
+\newcommand{\dprod}[2]{\langle #1, #2 \rangle}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\MSE}{\mathrm{MSE}}
+\newcommand{\MLE}{\mathrm{MLE}}
+
+\newtheoremstyle{mytheoremstyle} % name
+	{\topsep}		% Space above
+	{\topsep}		% Space below
+	{\itshape}		% Body font
+	{}			% Indent amount
+	{\bfseries}	% Theorem head font
+	{\textnormal{:}}	% Punctuation after theorem head
+	{.5em}		% Space after theorem head
+	{}			%Theorem headspec
+\theoremstyle{mytheoremstyle}
+\newtheorem*{thm}{Thm.}
+
+\newtheoremstyle{mylemstyle} % name
+	{\topsep}		% Space above
+	{\topsep}		% Space below
+	{\itshape}		% Body font
+	{}			% Indent amount
+	{\bfseries}	% Theorem head font
+	{\textnormal{:}}	% Punctuation after theorem head
+	{.5em}		% Space after theorem head
+	{}			%Theorem headspec
+\theoremstyle{mylemstyle}
+\newtheorem*{lem}{Lem.}
+
+
+\newtheoremstyle{mydefstyle} % name
+	{\topsep}		% Space above
+	{\topsep}		% Space below
+	{\normalfont}	% Body font
+	{}			% Indent amount
+	{\bfseries}	% Theorem head font
+	{\textnormal{:}}	% Punctuation after theorem head
+	{.5em}		% Space after theorem head
+	{}			%Theorem headspec
+\theoremstyle{mydefstyle}
+\newtheorem*{mydef}{Def.}
+\newtheorem*{ex}{E.g.}
+
+\begin{document}
+
+\maketitle
+\pagenumbering{gobble}
+\newpage
+\pagenumbering{arabic}
+
+\subsection{Question 1 Rice 8.16}
+
+Consider an i.i.d. sample of random variables with density function
+\[ f(x \mid \sigma) = \frac{1}{2\sigma}\exp\Big(- \frac{|x|}{\sigma} \Big) \]
+
+\begin{enumerate}
+\item Find the maximum likelihood estimate of $\sigma$.
+\newthought{Suppose} we have i.i.d. random variables with result $x_1,x_2,..,x_n$.  Then
+
+\begin{align*}
+f(x_1, x_2,...,x_n\mid \sigma) &= f(x_1\mid \sigma) \cdot f(x_2\mid \sigma) \cdot \cdot \cdot f(x_n\mid \sigma)\\
+&= \frac{1}{2\sigma}e^{-\frac{|x_1|}{\sigma}} \cdot \frac{1}{2\sigma}e^{-\frac{|x_2|}{\sigma}} \cdot \cdot \cdot \frac{1}{2\sigma}e^{-\frac{|x_n|}{\sigma}}\\
+&= \prod_{i=1}^{n}\frac{1}{2\sigma}e^{-\frac{|x_i|}{\sigma}}\\
+\end{align*}
+
+So the likelihood function of $\sigma$ is given
+
+\[L(\sigma) = \prod_{i=1}^{n}\frac{1}{2\sigma}e^{-\frac{|x_i|}{\sigma}}. \]
+
+Estimate $\hat{\sigma}$ by taking the log and differentiate then solve by setting to $0$.
+
+\begin{align*}
+\frac{d}{d\sigma}\log(L(\sigma)) &= \frac{d}{d\sigma} -n\log(2)-n\log(\sigma) - \sum_{i=1}^n \frac{|x_i|}{\sigma} \\
+&= -\frac{n}{\sigma} + \frac{\sum_{i=1}^n|x_i|}{\sigma^2}\\
+\end{align*}
+
+Setting the above equal to $0$ gives the result \marginnote{In part 2 of this question, we'll verify that that this maximizes}
+
+\[ \hat{\sigma} = \frac{1}{n} \sum_{i=1}^n |x_i| \]
+
+\item Find the asymptotic variance of the mle.
+
+\[
+\frac{1}{\tau^2} = -E\Big[\frac{d^2}{d\sigma^2}\log L(\sigma)\Big]
+\]
+
+\begin{align*}
+\frac{d^2}{d\sigma^2}\log(L(\sigma)) &= \frac{n}{\sigma^2} - \frac{2\sum_{i=1}^n |x_i|}{\sigma^3}\\
+&= \frac{n}{\hat{\sigma}^2} - \frac{2n}{\hat{\sigma}^2}\\
+&= -\frac{n}{\hat{\sigma}^2}\\
+\end{align*}
+ \marginnote{We sub $\sigma$ with the estimator to elimate the summation term.}
+
+Plugging the result into the equation that began this section
+
+\begin{align*}
+\frac{1}{\tau^2} &= -E[-\frac{n}{\hat{\sigma}^2}]\\
+&= \frac{n}{\hat{\sigma}^2}
+\end{align*}
+
+Finally, $\tau^2 = \frac{\hat{\sigma}^2}{n}$.
+
+\end{enumerate}
+
+
+\subsection{Question 2}
+Suppose that $X_1, X_2, ..., X_n$ are i.i.d. random variables on the interval $[0,1]$ with the density function
+
+\[f(x\mid \alpha) = \frac{\Gamma(3\alpha)}{\Gamma(\alpha)\Gamma(2\alpha)}x^{\alpha-1}(1-x)^{2\alpha -1} \]
+where $\alpha > 0$ is a parameter to be estimated from the sample.  It can be shown that
+\[ E(X) = \frac{1}{3} \]
+\[ \Var(X) = \frac{2}{9(3\alpha+1)}\]
+
+\begin{enumerate}
+\item What equation does the mle of $\alpha$ satisfy.
+
+\item What is the asymptotic variance of the mle.
+
+\end{enumerate}
+
+\end{document}
+\grid
