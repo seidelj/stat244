@@ -112,7 +112,7 @@ Setting the above equal to $0$ gives the result \marginnote{In part 2 of this qu
 
 \[ \hat{\sigma} = \frac{1}{n} \sum_{i=1}^n |x_i| \]
 
-\item Find the asymptotic variance of the mle.
+\item Find the asymptotic variance of the mle.\marginnote{When to use Likelihood function vs $f(x \mid \theta)$}
 
 \[
 \frac{1}{\tau^2} = -E\Big[\frac{d^2}{d\sigma^2}\log L(\sigma)\Big]
@@ -148,8 +148,224 @@ where $\alpha > 0$ is a parameter to be estimated from the sample.  It can be sh
 \begin{enumerate}
 \item What equation does the mle of $\alpha$ satisfy.
 
+\begin{align*}
+L(\alpha) &= f(x_1 \mid \alpha)\cdot f(x_2 \mid \alpha) \cdot\cdot\cdot f(x_n \mid \alpha)\\
+&= \prod_{i=1}^n \frac{\Gamma(3\alpha)}{\Gamma(\alpha)\Gamma(2\alpha)} x_i^{\alpha-1}(1-x_i)^{2\alpha -1}\\
+\end{align*}
+\begin{align*}
+\log(L(\alpha)) &= n\log(\Gamma(3\alpha))-n\log(\Gamma(\alpha))-n\log(\Gamma(2\alpha))\\
+ & + \sum_{i=1}^n[(\alpha-1)\log(x_i) + (2\alpha-1)\log(1-x_i)]\\
+\end{align*}
+\begin{align*}
+\frac{d}{d\alpha}\log(L(\alpha)) &=\frac{n3 \Gamma'(3\alpha)}{\Gamma(3\alpha)} -\frac{n \Gamma'(\alpha)}{\Gamma(\alpha)} - \frac{n2 \Gamma'(2\alpha)}{\Gamma(2\alpha)}\\
+&+  \sum_{i=1}^n[\log(x_i) + 2\log(1-x_i)]\\
+\end{align*}
+Setting the above equal $0$.
+\[
+\frac{3 \Gamma'(3\alpha)}{\Gamma(3\alpha)} -\frac{ \Gamma'(\alpha)}{\Gamma(\alpha)} - \frac{2 \Gamma'(2\alpha)}{\Gamma(2\alpha)}
+= -\frac{1}{n} \sum_{i=1}^n[\log(x_i) + 2\log(1-x_i)]
+\]
+
 \item What is the asymptotic variance of the mle.
 
+Use the property
+\[ \frac{1}{\tau^2} = -E\Big[\frac{d^2}{d\alpha^2}\log(L(\alpha))\Big] \]
+\begin{align*}
+\frac{d^2}{d\alpha^2} &= \frac{n9 \Gamma''(3\alpha)}{\Gamma(3\alpha)} - \frac{n9 \Gamma'(3\alpha)^2}{\Gamma(3\alpha)^2} -\frac{n \Gamma''(\alpha)}{\Gamma(\alpha)} +\frac{n \Gamma'(\alpha)^2}{\Gamma(\alpha)^2}\\
+ &- \frac{n4 \Gamma''(2\alpha)}{\Gamma(2\alpha)} + \frac{n4 \Gamma'(2\alpha)^2}{\Gamma(2\alpha)^2} \\
+\end{align*}
+\begin{align*}
+\frac{1}{\tau^2} &= -E\Big[n(\frac{9 \Gamma''(3\alpha)}{\Gamma(3\alpha)} - \frac{9 \Gamma'(3\alpha)^2}{\Gamma(3\alpha)^2} -\frac{ \Gamma''(\alpha)}{\Gamma(\alpha)} +\frac{ \Gamma'(\alpha)^2}{\Gamma(\alpha)^2}\\
+ &- \frac{4 \Gamma''(2\alpha)}{\Gamma(2\alpha)} + \frac{4 \Gamma'(2\alpha)^2}{\Gamma(2\alpha)^2}\Big] \\
+\end{align*}
+Hence
+\begin{multline}
+\tau^2 = -\frac{1}{n}\big[\frac{9 \Gamma''(3\alpha)}{\Gamma(3\alpha)} - \frac{9 \Gamma'(3\alpha)^2}{\Gamma(3\alpha)^2} -\frac{ \Gamma''(\alpha)}{\Gamma(\alpha)} +\frac{ \Gamma'(\alpha)^2}{\Gamma(\alpha)^2}\\
+ - \frac{4 \Gamma''(2\alpha)}{\Gamma(2\alpha)} + \frac{4 \Gamma'(2\alpha)^2}{\Gamma(2\alpha)^2}\Big]^{-1}
+\end{multline}
+\end{enumerate}
+
+\subsection{Question 4}
+Suppose that $X$ is the number of successes in a Binomial experiment with $n$ trials and probability of success $\theta/(1+\theta)$, where $0\leq \theta < \infty$.
+
+\begin{enumerate}
+\item Find the MLE of $\theta$.
+
+\newthought{Consider}
+\[p(x\mid \theta) = \binom{n}{x}\Big(\frac{\theta}{1+\theta}\Big)^x\big(1-\frac{\theta}{1+\theta} \Big)^{n-x}. \]
+
+Then
+\[L(\theta) = \binom{n}{x}\Big(\frac{\theta}{1+\theta}\Big)^x\big(1-\frac{\theta}{1+\theta} \Big)^{n-x}. \]
+
+The log likelihood is
+\[ \log L(\theta) = \log\binom{n}{x} + x \log(\frac{\theta}{1+\theta}) + (n-x)\log(1-\frac{\theta}{1+\theta}) \]
+\begin{align*}
+\frac{d}{d\theta} \log L(\theta) &= 0 + \frac{x(1+\theta)}{\theta} - (n-x)(\theta+1)\\
+&= \frac{x(1+\theta)}{\theta} - (n-x)(\theta+1)\\
+\end{align*}
+
+Setting the above to $0$ results in
+\[ \hat{\theta} = \frac{x}{n-x} \]
+furthermore
+\[\frac{d^2}{d\theta^2} = -n - \frac{x}{\theta^2} + x \]
+
+verifying that this maximizes $\hat{\theta}$.
+
+\item Use Fisher's Theorem to find the approximate distribution of th MLE when $n$ is large.
+
+Fisher's approximation allows the result for large $n$ in the given case, $\hat{\theta}$ will have approximately a $N(\theta, \frac{\tau^2(\theta)}{n})$ distribution.
+
+It remains to find $\tau^2(\theta)$.
+
+\[ \frac{1}{\tau^2(\theta)} = -E\Big[ \frac{d^2}{d\theta^2} \log f(X_1\mid \theta)\Big]. \]
+\begin{align*}
+E[-n - \frac{x}{\theta^2} + x] &= -n - \frac{E(X)}{\theta^2} + E(X)\\
+&= -n -\frac{n\theta}{1+\theta}*\frac{1}{\theta^2} + \frac{n\theta}{1+\theta}\\
+&= n(-1 - \frac{1+\theta^2}{(1+\theta)\theta})\\
+&= -n(1 + \frac{1-\theta}{\theta})\\
+&= -\frac{n}{\theta}\\
+\end{align*}
+
+Hence $\tau^2(\theta) = \frac{\theta}{n}$
+
+Applying Fisher, $\hat{\theta}$ will have an approximately normal $N(\theta, \theta)$ distribution.
+
+\end{enumerate}
+
+\subsection{Question 4}
+If $X$ and $Y$ are independent each with a Poisson distribtuion, show that $Z=X+Y$ is Poisson distributed.
+
+\newthought{Since} $X$ and $Y$ are independent, use the discrete convolution formula.  I'll assume $X$ and $Y$ have paramters $\lambda_1$ and $\lambda_2$ respectively.  However, the result will be obvious it the parameter $\lambda$ is the same.
+
+\[ P(X+Y=z) = p_Z(z) = \sum_{x=0}^z p_X(x) p_Y(z-x) \]
+\begin{align*}
+p_Z(z) &= \sum_{x=0}^z e^{-\lambda_1} \frac{\lambda_1^x}{x!} e^{-\lambda_2} \frac{\lambda_2^{z-x}}{(z-x)!}\\
+&= e^{-(\lambda_1 + \lambda_2)} \sum_{x=1}^z \frac{\lambda_1^x}{x!} \frac{\lambda_2^{z-x}}{(z-x)!}\\
+&= e^{-(\lambda_1 + \lambda_2)}\frac{1}{z!} \sum_{x=1}^z \frac{z!}{x!(z-x)!} \lambda_1^x \lambda_2^{z-x}\\
+&= e^{-(\lambda_1 + \lambda_2)}\frac{1}{z!} (\lambda_1+\lambda_2)^z\\
+&= e^{-(\lambda_1 + \lambda_2)}\frac{(\lambda_1+\lambda_2)^z}{z!}\\
+\end{align*}
+
+Which is a Poisson probability distribution.
+
+\subsection{Question 5}
+In a famous example, Bortkiewicz tabuluated the number of Cavalry men kicked to death by horses in the Prussian Cavalry, for 14 Corps over 20 years (1875-1894), giving $n=280$ observations in all.
+
+\begin{table}
+\centering
+\caption{Frequency tabulation}
+\label{freq-tab}
+\begin{tabular}{|l|l|lll}
+\cline{1-2}
+Number of deaths & Frequency count \\ \cline{1-2}
+0                & 144             \\ \cline{1-2}
+1                & 91              \\ \cline{1-2}
+2                & 32              \\ \cline{1-2}
+3                & 11              \\ \cline{1-2}
+4                & 2               \\ \cline{1-2}
+More             & 0               \\ \cline{1-2}
+Total            & 280             \\ \cline{1-2}
+\end{tabular}
+\end{table}
+
+\begin{enumerate}
+
+\item For this model, find the MLE of $\theta$, assume the $X_i$'s are independent.
+
+The likelihood function of $\theta$ is
+
+\[ L(\theta) = e^{-\theta n}  \frac{\theta^{\sum_{i=1}^n x_i}}{ \prod_{i=1}^n \frac{1}{x_i!}}. \]
+
+Differentiating the log of this function gives
+
+\[ \frac{d}{d\theta}\log L(\theta) = \frac{\sum_{i=1}^n x_i}{\theta} - n. \]
+
+Setting the above equal to zero we have
+
+\[ \hat{\theta} = \frac{1}{n} \sum_{i=1}^n x_i = \overline{X} \]
+
+\item Find the MSE of the MLE
+
+\newthought{Since} the MLE is the sample mean the MLE is unbiased.
+
+\[\MSE = \Var(\hat{\theta}) = \Var(\overline{X}) =  \frac{\Var(X_i)}{n} \]
+
+Since $P(X_i=k\mid \theta)$ is Poisson distributed, $\Var(X_i)=\theta$.
+
+So $\MSE = \frac{\theta}{n}$.
+
+\item From the Central Limit Theorem find the approximate distribution of the MLE when $n$ is large.
+
+Since the MLE is the sample mean for i.i.d $X_i$ where $E(X_i)=\theta$ and $\Var(X_i)=\theta$, $\hat{\theta}$ has an approximately $N(\theta,\frac{\theta}{n})$ distrubution, which becomes a better aproximiation as $n$ gets larger.
+
+\item From Fisher's Approximation, find the approximate distribution of the MLE when $n$ is large.
+
+\newthought{Fisher's} approximation states that if data consit of independent random variables each with distribution $f(x\mid\theta)$, and $\hat{\theta}$ can be found by solving log likelihood equal to 0, then for large $n$, $\hat{\theta}$ has approximately a $N(\theta, \frac{\tau^2(\theta)}{n})$.
+
+\[ \frac{1}{\tau^2(\theta)} = -E\Big[ \frac{d^2}{d\theta^2}\log p(X_1\mid \theta)\Big] \]
+Where
+\[ p(X_1 \mid \theta) = e^{-\theta} \frac{\theta^x_1}{x_1!}. \]
+
+Taking the log of the above yields
+\[\log p(X_1 \mid \theta) = -\theta + x \log(\theta) - \log(x!). \]
+
+Differientiating,
+\[ \frac{d}{d\theta}\log p(X_1 \mid \theta) = \frac{x_1}{t}-1 \]
+\[ \frac{d^2}{d\theta^2}\log p(X_1 \mid \theta) = -\frac{x_1}{\theta^2} \]
+
+Plugging this into the formula for asymptotic variance,
+
+\[ \frac{1}{\tau^2} = -E\Big[-\frac{x_1}{\theta^2}\Big] = \frac{E[X_1]}{\theta^2} \]
+
+Recall that $E(X_1) = \theta$ so $\tau^2(\theta) = \theta$.  Therefore, from Fisher the distrubition of $\hat{\theta}$ can be approximated as $N(\theta, \frac{\theta}{n})$.
+
+\item Evaluate the MLE for the given data.
+
+We found MLE to be the sample mean.  So take the total number of deaths by horse kicks and divide by $n=280$.
+\[ \MLE = \hat{\theta} = \frac{196}{280}= .7 \]
+
+\item If $\theta$, the mean number of deaths per Corps in a year, is really 1.0, what (approximately) is the probability that the MLE would turn out to be below $.85$.
+
+\newthought{Since} $\hat{\theta}$ has approximately $N(\theta, \frac{\theta}{n})$ distribution calculate this using
+
+\[P(\hat{\theta} < .85) = \Phi\Big(\frac{.85-1}{\sqrt{\frac{1}{280}}}\Big) = .0062\]
+\end{enumerate}
+
+\subsection{Question 6}
+Let $X_1,...,X_n$ be an i.i.d. sample from a Rayleigh distributions with paremater $\theta>0$:
+\[ f(x\mid \theta) = \frac{x}{\theta^2}e^{-x^2/(2\theta^2)} \text{ , } x \geq 0 \]
+
+\begin{enumerate}
+\item Find the mle of $\theta$
+\newthought{The} likelihood function of of $\theta$ is
+\begin{align*}
+L(\theta) &= f(x_1,...,x_n \mid \theta)\\
+&= f(x_1 \mid \theta) \cdot \cdot \cdot f(x_n \mid \theta)\\
+&= \prod_{i=1}^n \frac{x_i}{\theta^2}e^{-x_i^2/2\theta^2}\\
+\end{align*}
+
+Taking the log gives
+
+\[ \log L(\theta) = \sum_{i=1}^n \Big[ \log(x_i) - 2\log(\theta) - \frac{x_i^2}{2\theta^2} \Big]. \]
+
+Differentiating
+\[ \frac{d}{d\theta} \log L(\theta) = -\frac{2n}{\theta} + \frac{\sum_{i=1}^n x_i}{\theta^3}. \]
+
+Setting the derivative of the log likelihood to zero yields
+
+\[\hat{\theta} = \sqrt{\frac{\sum_{i=1}^n x_i}{2n}} \]
+\item Find the asymptotic variance of the mle. \marginnote{Again, does asymptotic variance come from likelihood function or single $f(x \mid \theta)$.}
+
+\begin{align*}
+\frac{d^2}{d\theta^2} \log L(\theta)  &= \frac{d^2}{d\theta^2} \frac{2n}{\theta} + \frac{\sum_{i=1}^n x_i}{\theta^3}\\
+&= \frac{2n}{\theta^2} - \frac{3 \sum_{i=1}^n x_i}{\theta^4} \\
+&= \frac{2n}{\hat{\theta}^2} - \frac{6n}{\hat{\theta}^2}\\
+&= -\frac{4n}{\hat{\theta}^2}\\
+\end{align*}
+
+\[ \frac{1}{\tau^2(\theta)} = -E \Big[ -\frac{4n}{\hat{\theta}^2}\Big] \]
+
+So the asymptotic variance is $\frac{\hat{\theta}^2}{4n}$
 \end{enumerate}
 
 \end{document}
