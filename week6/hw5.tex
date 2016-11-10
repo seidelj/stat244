@@ -185,7 +185,7 @@ Hence
 \end{multline}
 \end{enumerate}
 
-\subsection{Question 4}
+\subsection{Question 3`}
 Suppose that $X$ is the number of successes in a Binomial experiment with $n$ trials and probability of success $\theta/(1+\theta)$, where $0\leq \theta < \infty$.
 
 \begin{enumerate}
@@ -211,7 +211,7 @@ furthermore
 
 verifying that this maximizes $\hat{\theta}$.
 
-\item Use Fisher's Theorem to find the approximate distribution of th MLE when $n$ is large.
+\item Use Fisher's Theorem to find the approximate distribution of the MLE when $n$ is large.
 
 Fisher's approximation allows the result for large $n$ in the given case, $\hat{\theta}$ will have approximately a $N(\theta, \frac{\tau^2(\theta)}{n})$ distribution.
 
@@ -220,7 +220,7 @@ It remains to find $\tau^2(\theta)$.
 \[ \frac{1}{\tau^2(\theta)} = -E\Big[ \frac{d^2}{d\theta^2} \log f(X_1\mid \theta)\Big]. \]
 \begin{align*}
 E[-n - \frac{x}{\theta^2} + x] &= -n - \frac{E(X)}{\theta^2} + E(X)\\
-&= -n -\frac{n\theta}{1+\theta}*\frac{1}{\theta^2} + \frac{n\theta}{1+\theta}\\
+&= -n -\frac{n\theta}{1+\theta}\cdot \frac{1}{\theta^2} + \frac{n\theta}{1+\theta}\\
 &= n(-1 - \frac{1+\theta^2}{(1+\theta)\theta})\\
 &= -n(1 + \frac{1-\theta}{\theta})\\
 &= -\frac{n}{\theta}\\
@@ -235,7 +235,7 @@ Applying Fisher, $\hat{\theta}$ will have an approximately normal $N(\theta, \th
 \subsection{Question 4}
 If $X$ and $Y$ are independent each with a Poisson distribtuion, show that $Z=X+Y$ is Poisson distributed.
 
-\newthought{Since} $X$ and $Y$ are independent, use the discrete convolution formula.  I'll assume $X$ and $Y$ have paramters $\lambda_1$ and $\lambda_2$ respectively.  However, the result will be obvious it the parameter $\lambda$ is the same.
+\newthought{Since} $X$ and $Y$ are independent, use the discrete convolution formula.  I'll assume $X$ and $Y$ have paramters $\lambda_1$ and $\lambda_2$ respectively.  However, the result will be obvious if the parameter $\lambda$ is the same.
 
 \[ P(X+Y=z) = p_Z(z) = \sum_{x=0}^z p_X(x) p_Y(z-x) \]
 \begin{align*}
