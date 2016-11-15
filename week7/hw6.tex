@@ -305,18 +305,40 @@ Where $h(x) = 1$ and
 \subsection{Question 5}
 Suppose we face a pattern recognition problem, where the data consist of a single set of pixels $X$ (where there are 16 possible pixel patterns), and there are two possible pattern $\theta$, "0" and "6".  The model is that $X$ ha the probability function $p(x \mid \theta)$ depending on $\theta$, given by the following table.  Find the best test for "0" versus "6" for which the chance of making the error of "6" when the pattern is "0" is no greater than $0.10$.  What is the power of this test?
 
+\newthought{First} add the likelihood ratios $\frac{p(x\mid \theta_0)}{p(x\mid \theta_6)}$ to the table and re-order the table based on the ratios.
+
 \begin{table}
-\centering
-\caption{}
-\label{my-label}
-\begin{tabular}{|ll|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
-\hline
-                                      & \multicolumn{16}{c|}{Pixel number ($X_i$)}                            \\ \hline
-\multicolumn{1}{|l||}{$p(x\mid \theta)$} & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 \\ \hline
-\multicolumn{1}{|l||}{$\theta$: "0"}     & 0 & 0  & .02 & .03  & .02 & .03 & .02 & .02 & .08 & .12 & .02 & .22 & .02 & .23 &.02&.15   \\ \hline
-\multicolumn{1}{|l||}{$\theta$: "6"}     & 0 & .03 & .01 & .13 & .08 & .12 &0& 0& .02 & .20 & .01 & .17 & .04 & .11 & 0 & .08  \\ \hline
-\end{tabular}
+    \resizebox{\columnwidth}{!}{%
+    \begin{tabular}{l|llllllllllllllll}
+    Pixel     &1&7&8&15&9&14&3&11&16&12&10&13&5&6&4&2 \\
+    \hline
+    $p(x\mid \theta_0)$   &0&0.02&0.02&0.02&0.08&0.23&0.02&0.02&0.15&0.22&0.12&0.02&0.02&0.03&0.03&0\\
+    $p(x\mid \theta_6)$    &0&0&0&0&0.02&0.11&0.01&0.01&0.08&0.17&0.2&0.04&0.08&0.12&0.13&0.03\\
+    $\frac{p(x\mid \theta_0)}{p(x\mid \theta_6)}$ &undef&1000&1000&1000&4&2.1&2&2&1.9&1.3&0.6&0.5&0.25&0.25&0.23&0\\
+    \end{tabular}%
+}
 \end{table}
 
+Let $H_0=\theta_0$:"$0$" and $H_1=\theta_6$:"$6$".  Next find a critical value, $C$, to use in the likelihood ratio test.
+
+\[ \frac{p(x\mid H_0)}{p(x\mid H_6)} > C \]
+
+The problem specifies that $Pr(\text{Reject }H_0 \mid H_0)=.1$  Looking at the table, its clear that the test shoud be specified.
+
+\[ \frac{p(x\mid H_0)}{p(x\mid H_6)} > .5 \]
+
+Which means accept $H_0$ if the likelihood ratio is greater than   $C=.5$.
+
+Using the table we can also compute $Pr(\text{Accept }H_0 \mid H_1) = .6$ which is probability of type II error, $\beta$.  The power of the test is
+
+\[ \pi = 1- \beta = .4 \]
+
+
+\subsection{Question 6}
+Suppose $X$ has a $N(\mu, \sigma^2)$ distribution.
+\begin{enumerate}
+\item Find the Most Powerful test for testing at level $\alpha=0.05$ the hypothesis $H_0$:$\mu = 6$ and $\sigma^2=4$ versus $H_1$: $\mu=9$ and $\sigma^2=4$.
+
+\end{enumerate}
 \end{document}
 \grid
