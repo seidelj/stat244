@@ -16,6 +16,6 @@ def power_fnc(x):
 
 
 t1 = np.arange(6.0, 15.0, 0.1)
-plt.plot(t1, power_fnc(t1), label="")
+plt.plot(t1, power_fnc(t1), lw=4, label="")
 
 plt.show()

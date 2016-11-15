@@ -315,7 +315,7 @@ Suppose we face a pattern recognition problem, where the data consist of a singl
     \hline
     $p(x\mid \theta_0)$   &0&0.02&0.02&0.02&0.08&0.23&0.02&0.02&0.15&0.22&0.12&0.02&0.02&0.03&0.03&0\\
     $p(x\mid \theta_6)$    &0&0&0&0&0.02&0.11&0.01&0.01&0.08&0.17&0.2&0.04&0.08&0.12&0.13&0.03\\
-    $\frac{p(x\mid \theta_0)}{p(x\mid \theta_6)}$ &undef&1000&1000&1000&4&2.1&2&2&1.9&1.3&0.6&0.5&0.25&0.25&0.23&0\\
+    $\frac{p(x\mid \theta_0)}{p(x\mid \theta_6)}$ &undef&$\infty$&$\infty$&$\infty$&4&2.1&2&2&1.9&1.3&0.6&0.5&0.25&0.25&0.23&0\\
     \end{tabular}%
 }
 \end{table}
@@ -324,7 +324,8 @@ Let $H_0=\theta_0$:"$0$" and $H_1=\theta_6$:"$6$".  Next find a critical value, 
 
 \[ \frac{p(x\mid H_0)}{p(x\mid H_6)} > C \]
 
-The problem specifies that $Pr(\text{Reject }H_0 \mid H_0)=.1$  Looking at the table, its clear that the test shoud be specified.
+The problem specifies that $Pr(\text{Reject }H_0 \mid H_0)=.1$  Looking at the table, it is clear that the test shoud be specified.
+
 
 \[ \frac{p(x\mid H_0)}{p(x\mid H_6)} > .5 \]
 
@@ -358,14 +359,14 @@ Set up the test so that the model for $\overline{X} \sim N(\mu, \frac{\sigma^2}{
 &= P[Z > \Big(\frac{(C- \mu_0)}{\frac{\sigma_0}{\sqrt{n}}}\Big) ]
 \end{align}
 
-Notice that in (2) the left hand site of the probability is the standarized normal, so $Z \sim N(0,1)$.  Then let $z_{1-\alpha}$ be the $(1-\alpha)$th percentage point of the standrd normal, i.e $P(Z \leq z_{1-\alpha}) = 1-\alpha$.  The it is possible to find $P(Z>z_{1-\alpha}) = \alpha$ using a "Z table".  Then it is possible to find,
+Notice that in (2) the left hand site of the probability is the standarized normal, so $Z \sim N(0,1)$.  Then let $z_{1-\alpha}$ be the $(1-\alpha)$th percentage point of the standard normal, i.e $P(Z \leq z_{1-\alpha}) = 1-\alpha$.  The it is possible to find $P(Z>z_{1-\alpha}) = \alpha$ using a "Z table".  Then it is possible to find,
 \[C = \mu_0 + z_{1-\alpha}\Big(\frac{\sigma_0}{\sqrt{n}}\Big).\]
 
 In the context of this problem, $\alpha=.05$, $n=1$, $\mu_0=6$ and $\sigma^2=4$.  Furthermore, from the table in the back of Rice, $z_{.95} = 1.645$.  These values give us the result,
 
 \[ C = 6 + 1.645(2) = 9.29. \]
 
-In general, the model is set up so $H_0$ is rejected when $\overline{X} > C$, which is the Most Powerful test.
+In general, the model is set up so $H_0$ is rejected when $\overline{X} > C$.  By Neyman-Pearson Lemma, no test wuth same or lower $\alpha$ has a lower $\beta$ than the likelihood ratio with the given $\alpha=.05$.
 
 Evaluating this specific case,
 \[ \overline{X} = 6 < C = 9.29 \]
@@ -387,7 +388,9 @@ Therefore the power is given
 \[ \pi = 1- \beta = .4424 \]
 
 \item Suppose that instead of the above $H_1$, we have $H_1$: $\mu=\mu_1$ and $\sigma^2=4$, where $\mu_1 > 6$.  Find and graph the power function \marginnote{$\Phi (\frac{x-\mu}{\sigma}) = \frac{1}{2}[1+ \erf(\frac{x-\mu}{\sigma\sqrt{2}})]$}.
-\[ \pi = f(\mu_1) = 1 - \frac{1}{2}[1 + \erf\Big(\frac{9.29-\mu_1}{2\sqrt{2}}\Big)] \]
+\[ \pi = f(\mu_1) = 1 - \frac{1}{2}[1 + \erf\Big(\frac{9.29-\mu_1}{2\sqrt{2}}\Big)] \text{ , } \mu_i > 6 \]
+
+\marginnote{This function approaches 1 as $\mu_1$ approaches $\infty$.}
 \includegraphics{power}
 
 \end{enumerate}
