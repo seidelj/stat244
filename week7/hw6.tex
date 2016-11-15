@@ -5,7 +5,7 @@
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{graphics/}}
 
-\title{STAT 244 \\ Homework 5}
+\title{STAT 244 \\ Homework 6}
 \author{Joe Seidel}
 \date{\today}
 
@@ -36,6 +36,7 @@
 \newcommand{\Cov}{\mathrm{Cov}}
 \newcommand{\MSE}{\mathrm{MSE}}
 \newcommand{\MLE}{\mathrm{MLE}}
+\newcommand{\erf}{\mathrm{erf}}
 
 \newtheoremstyle{mytheoremstyle} % name
 	{\topsep}		% Space above
@@ -338,6 +339,56 @@ Using the table we can also compute $Pr(\text{Accept }H_0 \mid H_1) = .6$ which 
 Suppose $X$ has a $N(\mu, \sigma^2)$ distribution.
 \begin{enumerate}
 \item Find the Most Powerful test for testing at level $\alpha=0.05$ the hypothesis $H_0$:$\mu = 6$ and $\sigma^2=4$ versus $H_1$: $\mu=9$ and $\sigma^2=4$.
+
+\newthought{The general} form of the likelihood function for $X \sim N(\mu, \theta^2)$ distributions is
+\[ L(\theta) = L(\mu, \sigma^2) = 2(\pi)^{-\frac{n}{2}} \sigma^{-n} e^{-\frac{1}{2\sigma^2}\sum_{i=1}^n(X_i-\mu)^2} \]
+
+So the likelihood ratio given $H_0$ and $H_1$ can be found \marginnote{See Stigler 6-6 for the alebgra on this}
+
+\begin{align*}
+\frac{ L(\theta_1)}{L(\theta_0)} &= \frac{2(\pi)^{-\frac{n}{2}} \sigma_1^{-n} e^{-\frac{1}{2\sigma_1^2}\sum_{i=1}^n(X_i-\mu_1)^2}}{2(\pi)^{-\frac{n}{2}} \sigma_0^{-n} e^{-\frac{1}{2\sigma_0^2}\sum_{i=1}^n(X_i-\mu_0)^2}}\\
+&=e^{\frac{1}{\sigma_0}^2 [(\mu_1-\mu_0)\sum_{i=1}^nX_i]} e^{-\frac{n}{2\sigma_0^2}[\mu_1^2 -\mu_0^2]}\\
+\end{align*}
+
+Set up the test so that the model for $\overline{X} \sim N(\mu, \frac{\sigma^2}{n})$ and instead of dealing directly with the likelihood ratio above, reject $H_0$ when $\overline{X} > C$.  To find C, first consider
+
+\begin{align}
+\alpha &= P(\overline{X} > C \mid H_0)\\
+&=P\Big[\Big(\frac{\overline{X} - \mu_0}{\frac{\sigma_0}{\sqrt{n}}}\Big) > \Big(\frac{(C- \mu_0)}{\frac{\sigma_0}{\sqrt{n}}}\Big) \Big]\\
+&= P[Z > \Big(\frac{(C- \mu_0)}{\frac{\sigma_0}{\sqrt{n}}}\Big) ]
+\end{align}
+
+Notice that in (2) the left hand site of the probability is the standarized normal, so $Z \sim N(0,1)$.  Then let $z_{1-\alpha}$ be the $(1-\alpha)$th percentage point of the standrd normal, i.e $P(Z \leq z_{1-\alpha}) = 1-\alpha$.  The it is possible to find $P(Z>z_{1-\alpha}) = \alpha$ using a "Z table".  Then it is possible to find,
+\[C = \mu_0 + z_{1-\alpha}\Big(\frac{\sigma_0}{\sqrt{n}}\Big).\]
+
+In the context of this problem, $\alpha=.05$, $n=1$, $\mu_0=6$ and $\sigma^2=4$.  Furthermore, from the table in the back of Rice, $z_{.95} = 1.645$.  These values give us the result,
+
+\[ C = 6 + 1.645(2) = 9.29. \]
+
+In general, the model is set up so $H_0$ is rejected when $\overline{X} > C$, which is the Most Powerful test.
+
+Evaluating this specific case,
+\[ \overline{X} = 6 < C = 9.29 \]
+and we therefore fail reject $H_0$.
+
+\item Find the power of this test.
+
+\newthought{The power} of the test is also determined using $C$.
+\begin{align*}
+\beta &= P(\overline{X} \leq C \mid H_1)\\
+&= P(\overline{X} \leq 9.92 \mid H_1)\\
+&= P(Z \leq\Big(\frac{9.29 - 9}{2}\Big))\\
+&= P(Z \leq .145)\\
+&= .5576
+\end{align*}
+
+Therefore the power is given
+
+\[ \pi = 1- \beta = .4424 \]
+
+\item Suppose that instead of the above $H_1$, we have $H_1$: $\mu=\mu_1$ and $\sigma^2=4$, where $\mu_1 > 6$.  Find and graph the power function \marginnote{$\Phi (\frac{x-\mu}{\sigma}) = \frac{1}{2}[1+ \erf(\frac{x-\mu}{\sigma\sqrt{2}})]$}.
+\[ \pi = f(\mu_1) = 1 - \frac{1}{2}[1 + \erf\Big(\frac{9.29-\mu_1}{2\sqrt{2}}\Big)] \]
+\includegraphics{power}
 
 \end{enumerate}
 \end{document}

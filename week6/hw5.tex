@@ -112,7 +112,7 @@ Setting the above equal to $0$ gives the result \marginnote{In part 2 of this qu
 
 \[ \hat{\sigma} = \frac{1}{n} \sum_{i=1}^n |x_i| \]
 
-\item Find the asymptotic variance of the mle.\marginnote{When to use Likelihood function vs $f(x \mid \theta)$}
+\item Find the asymptotic variance of the mle.
 
 \[
 \frac{1}{\tau^2} = -E\Big[\frac{d^2}{d\sigma^2}\log L(\sigma)\Big]
@@ -354,7 +354,7 @@ Differentiating
 Setting the derivative of the log likelihood to zero yields
 
 \[\hat{\theta} = \sqrt{\frac{\sum_{i=1}^n x_i}{2n}} \]
-\item Find the asymptotic variance of the mle. \marginnote{Again, does asymptotic variance come from likelihood function or single $f(x \mid \theta)$.}
+\item Find the asymptotic variance of the mle.
 
 \begin{align*}
 \frac{d^2}{d\theta^2} \log L(\theta)  &= \frac{d^2}{d\theta^2} \frac{2n}{\theta} + \frac{\sum_{i=1}^n x_i}{\theta^3}\\
