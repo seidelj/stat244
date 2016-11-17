@@ -16,8 +16,10 @@ def power_fnc(x):
 
 
 t1 = np.arange(6.0, 15.0, 0.1)
-plt.ylabel("$\pi$")
-plt.xlabel("$H_a$: $u_1$")
+plt.rc('text', usetex=True)
+plt.rc('font', family='serif')
+plt.ylabel("$\pi$", fontsize=18)
+plt.xlabel("$H_a$: $u_1$", fontsize=18)
 plt.plot(t1, power_fnc(t1), lw=4, label="")
 
 plt.show()
