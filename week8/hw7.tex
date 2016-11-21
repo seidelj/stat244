@@ -5,7 +5,7 @@
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{graphics/}}
 
-\title{STAT 244 \\ Homework 6}
+\title{STAT 244 \\ Homework 7}
 \author{Joe Seidel}
 \date{\today}
 
@@ -217,15 +217,14 @@ Where $F(x)$ is cdf of $\Gamma(10,10)$.
 
 \subsection{Question 4}
 
+Call "This, it thus, and" Class I workds; Class II is "everything else".   For each of 215 groups of 5 of James Mill's sentences, the number of Class I words was counted.
+
+Test whether a Binomial Distribution $(n=5, \theta)$ fits these data.
+
 \begin{marginfigure}
 \includegraphics{James_Mill}
 \caption{James Mill, the economist}
 \end{marginfigure}
-
-
-Call "This, it thus, and" Class I workds; Class II is "everything else".   For each of 215 groups of 5 of James Mill's sentences, the number of Class I words was counted.
-
-Test whether a Binomial Distribution $(n=5, \theta)$ fits these data.
 
 \newthought{First}, knowing the MLE of a binomial will be useful.
 
@@ -242,18 +241,84 @@ Setting the above equal to zero and solving for $\theta$ give the mle.
 
 \[ \hat{\theta} = \overline{X} \]
 
-Using the table we can compute the mle, $\hat{\theta} = 339/215(5) = .31$.
+Using the table we can compute the mle, $\hat{\theta} = 339/215(5) = .31$.  With this a few rows can be added to the table.
+
+Expected is calculated
+
+\[ E_i = \binom{n}{x_i} \hat{\theta}^x_i (1-\hat{\theta})^{n-x_i} \cdot 225 \text{ for } x_i = 0,1,2,..,n=5 \]
+
+Then calculate each component of
+
+\[ X^2 = \sum_{i=1}^m \frac{[x_i - np_i(\hat{\theta})]^2}{np_i(\hat{\theta})}\]
+
+Where $m=6$ cells.
 
 \begin{table}
 \centering
 \begin{tabular}{l|llllll}
 No. Class I words & 0 & 1 & 2 & 3 & 4 & 5 \\
 No. groups(observed) & 87 & 11 & 51 & 42 & 20 & 4 \\
-No. groups(expected) &34&76&68&30&7&1
+No. groups(expected) &34&76&68&30&7&1\\
+Component of Chi-Squared &82.62&55.59&4.25&4.8&24.14&9.0
 \end{tabular}
 \caption{Class I words}
 \label{millwords}
 \end{table}
+
+Summing up the last row of the table, the chi-square statistic $X^2=180.4$ with 4 degrees of freedom (6 cells and one parameter was estimated from the data).  Finally, our rejection region is $X^2 > \chi_4^2(\alpha)$.  If we specify $\alpha=.005$ (giving our null hypothesis the best chance) our test is
+
+\[ 180.4 = X^2 > \chi_4^2(.005) = 14.86 \]
+
+Which rejects the null hypothesis that $X \sim Bin(n=5, \theta)$.
+
+
+\subsection{Question 5}
+The members of a community are classified by Blood type:
+
+\begin{table}
+\centering
+\begin{tabular}{llllll}
+O&A&B&BA&Total\\
+121&120&79&33&353
+\end{tabular}
+\caption{Community blood types}
+\label{bloodtypes}
+\end{table}
+
+Theory has is that the probabilities of those types depends on gene frequency parameters $r,p,q$, where $r+p+q=1$ and $P($"O"$)=r^2$, $P($"A"$)=p^2+2pr$, $P($"B"$)=q^2+2qr$, and $P($"AB"$)=2pq$.  Using numerical methods (that is, a method such as that described in Chapter 5 of Stigler's notes) we can find the MLEs of $r,p,q$; they are
+\begin{align*}
+\hat{r} &= 0.580 \\
+\hat{p} &= 0.246 \\
+\hat{q} &= 0.173 \\
+\end{align*}
+
+Test if the community fits the theory. \marginnote{Can't afford to estimate three parameters with only 4 cells!}
+
+\newthought{Since} there are only 4 cells, I cannot afford to estimate all 3 parameters.  Instead, I'll just estimate 2 and the substute the third $r'= 1- .246 -.173 = .581$
+
+
+
+\begin{table}
+\centering
+\caption{Blood Types with Chi-Square}
+\label{blod2}
+\begin{tabular}{l|lllll}
+                   & O      & A      & B    & BA   & Total  \\ \cline{2-6}
+observed           & 121    & 120    & 79   & 33   & 353    \\
+expected           & 119.15 & 122.26 & 81.5 & 30.5 & 353.41 \\
+Comp of Chi-Square &0.02&0.04&0.08&0.2&.342\\
+\end{tabular}
+\end{table}
+
+The table above was completed using similiar methods described in the previous question.  The chi-squared statistic is $X^2 = .342$.  We have 1 degree of freedom ($4-1-2 = 1$).  Choose $\alpha=.1$, then
+
+\[ .342 = X^2 < \chi_1^2(.1) = 2.71 \]
+
+Which supports the null that the community fits the theory.
+
+
+\subsection{Question 6}
+Are finger print patterns genetic, or are the developmental?  In 1892\marginnote{Columbus sailed the ocean blue...or was it 1492?}, Francis Galton compiled the following table on the relationship between the patterns on the same finger of 105 sibling pairs.  Test the hypothesis that the patterns are independent for example, that knowing one sibiling (A) has Whorl on the figunre does not help in predicting the pattern of the other (B).
 
 \end{document}
 \grid
