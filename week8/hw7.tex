@@ -1,0 +1,259 @@
+\documentclass{tufte-book}
+
+\usepackage{amsmath, amsthm}
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{graphics/}}
+
+\title{STAT 244 \\ Homework 6}
+\author{Joe Seidel}
+\date{\today}
+
+\usepackage{booktabs}
+\usepackage{units}
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\usepackage{multicol}
+\usepackage{lipsum}
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usepackage{wasysym}
+
+\newcommand{\doccmd}[1]{\texttt{\textbackslash#1}}% command name -- adds backslash automatically
+\newcommand{\docopt}[1]{\ensuremath{\langle}\textrm{\textit{#1}}\ensuremath{\rangle}}% optional command argument
+\newcommand{\docarg}[1]{\textrm{\textit{#1}}}% (required) command argument
+\newenvironment{docspec}{\begin{quote}\noindent}{\end{quote}}% command specification environment
+\newcommand{\docenv}[1]{\textsf{#1}}% environment name
+\newcommand{\docpkg}[1]{\texttt{#1}}% package name
+\newcommand{\doccls}[1]{\texttt{#1}}% document class name
+\newcommand{\docclsopt}[1]{\texttt{#1}}% document class option name
+\DeclareMathOperator{\proj}{proj}
+\newcommand{\vct}{\mathbf}
+
+
+\newcommand{\dprod}[2]{\langle #1, #2 \rangle}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\MSE}{\mathrm{MSE}}
+\newcommand{\MLE}{\mathrm{MLE}}
+\newcommand{\erf}{\mathrm{erf}}
+
+\newtheoremstyle{mytheoremstyle} % name
+	{\topsep}		% Space above
+	{\topsep}		% Space below
+	{\itshape}		% Body font
+	{}			% Indent amount
+	{\bfseries}	% Theorem head font
+	{\textnormal{:}}	% Punctuation after theorem head
+	{.5em}		% Space after theorem head
+	{}			%Theorem headspec
+\theoremstyle{mytheoremstyle}
+\newtheorem*{thm}{Thm.}
+
+\newtheoremstyle{mylemstyle} % name
+	{\topsep}		% Space above
+	{\topsep}		% Space below
+	{\itshape}		% Body font
+	{}			% Indent amount
+	{\bfseries}	% Theorem head font
+	{\textnormal{:}}	% Punctuation after theorem head
+	{.5em}		% Space after theorem head
+	{}			%Theorem headspec
+\theoremstyle{mylemstyle}
+\newtheorem*{lem}{Lem.}
+
+
+\newtheoremstyle{mydefstyle} % name
+	{\topsep}		% Space above
+	{\topsep}		% Space below
+	{\normalfont}	% Body font
+	{}			% Indent amount
+	{\bfseries}	% Theorem head font
+	{\textnormal{:}}	% Punctuation after theorem head
+	{.5em}		% Space after theorem head
+	{}			%Theorem headspec
+\theoremstyle{mydefstyle}
+\newtheorem*{mydef}{Def.}
+\newtheorem*{ex}{E.g.}
+
+\begin{document}
+
+\maketitle
+\pagenumbering{gobble}
+\newpage
+\pagenumbering{arabic}
+
+\subsection{Question 1}
+Suppose $X$ follows a geometric distribution with parameter $p$.
+
+\begin{enumerate}
+
+\item Derive the likelihood ratio for testing the hypothesis $p=p_0$ versus the alternative $p \neq p_0$.
+
+\newthought{The} variable $X$ has PMF given
+
+\[ p(X=x) = p(1-p)^{x-1} \text{ , } x=1,2,... \]
+
+We have a composite hypothesis a generalized likelihood ratio test is in order.
+
+\[ \Lambda = \frac{\max_{p \in w_0}[L(p)]}{\max_{p \in \Omega}[L(p)]} \]
+
+Where the rejection region consists of small values for $\Lambda$.  In this case $w_0 = \{p_0\}$ and $\Omega = \{ 0 < p < 1\}$
+
+\[ \max_{p \in w_0}[L(p)] = p_0(1-p_0)^{x-1}. \]
+
+For the denomitor we have to maximize the likelihood for $p \in \Omega$.  Which is the mle of $f(x \mid p) = p(1-p)^{x}$, $\hat{p} = \frac{1}{\overline{X}}$. Which makes
+
+\[ \max_{p \in \Omega}[L(p)] = \frac{1}{\overline{X}}\Big(1-\frac{1}{\overline{X}}\Big)^{x-1}. \]
+
+Therefore \marginnote{It's important to note that I've set this up observing only $1$ $X$, otherwise this would look slightly different, in fact I will end up replacing $x$ for $\overline{X}$ soon.}
+
+\[ \Lambda = \frac{\overline{X} p_0(1-p_0)^{x-1}\overline{X}^{x-1}}{(\overline{X}-1)^{x-1}} \]
+
+Which is the generalized likelihood ratio that will test the hypothesis.
+
+\item For $p_0=0.01$, by some combination of numerical experimentation and mathematical analysis, find the set of possible valyes of $x$ for $X$ for which the likelihood ratio is less than $0.1$.
+
+\newthought{Evaluating} $\Lambda$ for a few values of $X$ yields.
+\begin{table}
+\centering
+\caption{GLR}
+\label{my-label1}
+\begin{tabular}{l|lllll}
+$x$ & 1 & 2 & 3    & 4 & 5    \\ \hline
+$\Lambda$ & .01 & .0396 & .0066 & .09 & .117
+\end{tabular}
+\end{table}
+
+Hence for $x \leq 4$ we have likelihood ratio less than $0.1$.
+
+\item Find the probability of Type 1 error for the test the rejects $p_0=0.01$ when the likelihood ratio is less than $0.1$.  Find the power of this test when $p=0.5$.  Find the power of ths test when $p=0.001$.
+
+
+\end{enumerate}
+
+
+\subsection{Question 2 Rice 9.12}
+
+Let $X_1,...,X_n$ be a random sample from an exponential distribution with the density function $f(x\mid \theta)= \theta e^{-\theta x}$.  Derive a likelihood ratio test of $H_0$: $\theta = \theta_0$ versus $H_A$: $\theta \neq \theta_0$, and show that the rejection region is of the form $\{\overline{X}e^{-\theta_0\overline{X}} \leq c \}$.
+
+\newthought{First}, \marginnote{I've found this in previous homeworks.} recall that the mle of $L(\theta)$ is $\hat{\theta}=\overline{X}$.  Set up the likelihood ratio test
+
+\[ \Lambda = \frac{\max_{p \in w_0}[L(p)]}{\max_{p \in \Omega}[L(p)]}. \]
+
+The numerater will be
+
+\[ L(\theta_0) = \prod_{i=1}^n \theta e^{-\theta_0 x_i} \]
+and the denomitaor
+
+\[ L(\hat{\theta}) = \prod_{i=1}^n \frac{1}{\overline{X}} e^{-\frac{x_i}{\overline{X}}}. \]
+
+Then
+\begin{align*}
+\Lambda &= \frac{\prod_{i=1}^n \theta e^{-\theta_0 x_i}}{\prod_{i=1}^n \frac{1}{\overline{X}} e^{-\frac{x_i}{\overline{X}}}}\\
+&= \frac{\theta_0^n e^{-\theta_0 n\overline{X}}}{\frac{1}{\overline{X}^n}e^{-\frac{\overline{X}n}{\overline{X}}}}\\
+&= \frac{\theta_0^n \overline{X}^n e^{-\theta_0 n\overline{X}}}{e^{-n}}\\
+&= \big(e \theta_0 \overline{X} e^{(-\theta_0 \overline{X})}\big)^n
+\end{align*}
+
+Where $H_0$ is rejected when $\Lambda$ is small.  Since $e, n, \theta$ are positive, $\Lambda$ is small when $\overline{X} e^{(-\theta_0 \overline{X})}$ is small.
+
+\begin{align*}
+\big(e \theta_0 \overline{X} e^{(-\theta_0 \overline{X})}\big)^n < c_1\\
+e \theta_0 \overline{X} e^{(-\theta_0 \overline{X})} < c_1^{\frac{1}{n}}\\
+\overline{X} e^{(-\theta_0 \overline{X})} < \frac{c_1^{\frac{1}{n}}}{\theta_0 e}\\
+\end{align*}
+
+Therefore, we see the rejection region takes the form $\overline{X} e^{(-\theta_0 \overline{X})} \leq c =\frac{c_1^{\frac{1}{n}}}{\theta_0 e}$.
+
+\subsection{Question 3 Rice 9.13}
+Suppose, to be specific, that in problem 12, $\theta_0=1$, $n=10$, and that $\alpha=.05$.  In order to use the test, we must find the appropriate value of $c$.
+\begin{enumerate}
+
+\item Show that rejection region is of the form $\{\overline{X} \leq x_0\} \cup \{ \overline{X} \geq x_1 \}$, where $x_0$ and $x_1$ are deterimined by $c$.
+
+\newthought{Now} that we are given a value for $\theta_0$ we have
+
+\[ f(x\mid \theta_0) = xe^{-x}. \]
+
+But we also found in the previous question that our test rejects when
+\[ f(\overline{X} \mid \theta_0) = \overline{X} e^{(-\overline{X})} \]
+is small, specifically when less than $c$.  To see why it takes the form
+$\{\overline{X} \leq x_0\} \cup \{ \overline{X} \geq x_1 \}$, consider the graph of the function.
+
+\begin{figure}
+\includegraphics{q3}
+\caption{}
+\end{figure}
+
+There would be a $c$ chosen that corresponds with the $Y$ axis of the graph and a horizontal line would interect the function at two values of $x$.
+
+\item Explain why $c$ should be chosen so that $P(\overline{X} e^{(-\overline{X})} \leq c) = .05$.
+
+\newthought{This} is just a restatement of Type I error under Neyman-Pearson.
+
+\[Pr(\text{Reject }H_0 \mid H_0) = Pr(x \in [0, c] \mid \theta_0) \]
+
+Which can be worded to say, the probability that $x$ falls in the rejection zone.  Furthermore, we found that $P(\overline{X} e^{(-\overline{X})})$ provides a rejection zone for $\Lambda$.  What remains is to determine how willing we are to make Type 1 error.
+
+If we want $\alpha=.05$ then we should set
+\[ Pr(x \in [0, c] \mid \theta_0) = Pr(f(\overline{X} \mid \theta)) < c) = .05 \]
+
+to determine what $c$ should be.
+
+\item Explain why $\sum_{i=1}^10 X_i$ and hence $\overline{X}$ follow gamma distributions when $\theta_0=1$.  How could this knowledge be used to choose c?
+
+Under $H_0$: $\theta_0=1$ $X_i \sim Exponetial(1)$ which is a special ase of $\Gamma(1,\lambda)$ or in this particular case $\Gamma(1,1)$.  On the last homework, I found that $\sum_{i=1}^n X_i \sim \Gamma(n,1)$ and $\overline{X} \sim \Gamma(n,n)$.  Knowing the exact distribution, means I could compute the exact value of $c$ for which $95$ coverage for acceptable values of $H_0$.
+
+In this day and age, a computer would be the easiest way to do this.  The gist would be first solve $f(\overline{X})=c$ to get $x_0(c)$ and $x_1(c)$.  Then solve
+\[ \alpha(c) = F(x_0(c)) + 1-F(x_1(c)) \]
+
+Where $F(x)$ is cdf of $\Gamma(10,10)$.
+
+\item Suppose you hadn't thought of the preceding fact.  Explain how you could determine a good approximation to $c$ by generating random numbers on a computer (simulation).
+
+\newthought{Generate} a bunch of samples from $Exponential(1)$ of size $n=10$.  Then compute $\overline{X}e^{\overline{X}}$ for each sample. Sort the result and set the cuttoff as the value indexed at the $5\%$ of the number of samples generated.  For example, if the results are stored in some list of size $10000$ then you'd take value indexed at list[500] as the cuttoff value for a close approximation.
+\end{enumerate}
+
+\subsection{Question 4}
+
+\begin{marginfigure}
+\includegraphics{James_Mill}
+\caption{James Mill, the economist}
+\end{marginfigure}
+
+
+Call "This, it thus, and" Class I workds; Class II is "everything else".   For each of 215 groups of 5 of James Mill's sentences, the number of Class I words was counted.
+
+Test whether a Binomial Distribution $(n=5, \theta)$ fits these data.
+
+\newthought{First}, knowing the MLE of a binomial will be useful.
+
+\begin{align*}
+L(\theta) &= \prod_{i=1}^n \binom{n}{x_i} \theta^{x_i}(1-\theta)^{n-x_i} \\
+&= \prod_{i=1}^n \binom{n}{x_i} \theta^{\sum_{i=1}^n x_i}(1-\theta)^{n- \sum_{i=1}^n x_i}\\
+\end{align*}
+
+Taking the log and the derivative we have
+
+\[ \frac{d}{d\theta} \log L(\theta) = \frac{\overline{X}n}{\theta} + \frac{n- \overline{X}n}{\theta - 1} \]
+
+Setting the above equal to zero and solving for $\theta$ give the mle.
+
+\[ \hat{\theta} = \overline{X} \]
+
+Using the table we can compute the mle, $\hat{\theta} = 339/215(5) = .31$.
+
+\begin{table}
+\centering
+\begin{tabular}{l|llllll}
+No. Class I words & 0 & 1 & 2 & 3 & 4 & 5 \\
+No. groups(observed) & 87 & 11 & 51 & 42 & 20 & 4 \\
+No. groups(expected) &34&76&68&30&7&1
+\end{tabular}
+\caption{Class I words}
+\label{millwords}
+\end{table}
+
+\end{document}
+\grid
