@@ -342,7 +342,27 @@ Which supports the null that the community fits the theory.
 
 
 \subsection{Question 6}
-Are finger print patterns genetic, or are the developmental?  In 1892\marginnote{Columbus sailed the ocean blue...or was it 1492?}, Francis Galton compiled the following table on the relationship between the patterns on the same finger of 105 sibling pairs.  Test the hypothesis that the patterns are independent for example, that knowing one sibiling (A) has Whorl on the figunre does not help in predicting the pattern of the other (B).
+Are finger print patterns genetic, or are the developmental?  In 1892\marginnote{Columbus sailed the ocean blue...or was it 1492?}, Francis Galton compiled the following table on the relationship between the patterns on the same finger of 105 sibling pairs.  Test the hypothesis that the patterns are independent for example, that knowing one sibiling (A) has Whorl on the finger does not help in predicting the pattern of the other (B).
+
+\begin{table}
+\centering
+\caption{Galton's Siblings}
+\label{galton}
+\begin{tabular}{l|lll|l}
+           & \multicolumn{3}{l}{A Children}                                    &        \\
+B Children & \multicolumn{1}{l|}{Arches} & \multicolumn{1}{l|}{Loops} & Whorls & Totals \\ \hline
+Arches     & \multicolumn{1}{l|}{5}      & \multicolumn{1}{l|}{12}    & 2      & 19     \\ \hline
+Loops      & \multicolumn{1}{l|}{4}      & \multicolumn{1}{l|}{42}    & 15     & 61     \\ \hline
+Whorls     & \multicolumn{1}{l|}{1}      & \multicolumn{1}{l|}{14}    & 10     & 25     \\ \hline
+Totals     & \multicolumn{1}{l|}{10}     & \multicolumn{1}{l|}{68}    & 27     & 105    \\ \hline
+\end{tabular}
+\end{table}
+
+\newthought{Calculate} $\chi^2$ squared statistic
+
+\[ \chi^2 = \sum_{i=1}^3 \sum_{j=1}^3 \frac{\Big[X_{ij} - \Big(\frac{X_{i+}X_{+j}}{n}\Big)\Big]^2}{\Big(\frac{X_{i+}X_{+j}}{n}\Big)} \]
+
+Which computes to $\chi^2 = 11.16$.  We check this value with the table, given $(r-1)(c-1)=2\cdot 2=4$ degress of freedom.  From the Chi-Squared table, we'd have a p-value $>.025$ which provides fairly strong evidence against the null hypothesis that the patterns are independent. 
 
 \end{document}
 \grid
