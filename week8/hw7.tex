@@ -108,28 +108,52 @@ For the denomitor we have to maximize the likelihood for $p \in \Omega$.  Which 
 
 Therefore \marginnote{It's important to note that I've set this up observing only $1$ $X$, otherwise this would look slightly different, in fact I will end up replacing $x$ for $\overline{X}$ soon.}
 
-\[ \Lambda = \frac{\overline{X} p_0(1-p_0)^{x-1}\overline{X}^{x-1}}{(\overline{X}-1)^{x-1}} \]
+\[ \Lambda = \frac{p_0x(1-p_0)^{x-1}}{(1-\frac{1}{x})^{x-1}} \]
 
 Which is the generalized likelihood ratio that will test the hypothesis.
 
 \item For $p_0=0.01$, by some combination of numerical experimentation and mathematical analysis, find the set of possible valyes of $x$ for $X$ for which the likelihood ratio is less than $0.1$.
 
-\newthought{Evaluating} $\Lambda$ for a few values of $X$ yields.
-\begin{table}
-\centering
-\caption{GLR}
-\label{my-label1}
-\begin{tabular}{l|lllll}
-$x$ & 1 & 2 & 3    & 4 & 5    \\ \hline
-$\Lambda$ & .01 & .0396 & .0066 & .09 & .117
-\end{tabular}
-\end{table}
+When graphing the the function for $\Lambda$ with $p_0=.01$, its clear that there are two values of $x$ that make likelihood ration less than $.1$.
+
+\begin{figure}
+\includegraphics{q1}
+\caption{The likelihood function when $p_0=.01$}
+\end{figure}
+
+I used a computer to find the values.  Since $x \in \mathbb{N}$, $x \leq 4$ and $x \geq 488$.
 
 Hence for $x \leq 4$ we have likelihood ratio less than $0.1$.
 
 \item Find the probability of Type 1 error for the test the rejects $p_0=0.01$ when the likelihood ratio is less than $0.1$.  Find the power of this test when $p=0.5$.  Find the power of ths test when $p=0.001$.
 
+\newthought{To find} $\alpha$ given $\Lambda \leq .1$ and $H_0$:$p=.01$ take
+\begin{align*}
+\alpha &= P(x \leq 4 \mid p=.01) + P(x \geq 488 \mid p=.01)\\
+&= \sum_{i=1}^4P(x=i \mid p=.01) + 1 - P(x \leq 488 \mid p=.01)\\
+&= .04 + .007\\
+&= .047
+\end{align*}
 
+Next I need to find the the power f the test when $p=.5$ and $p=.0001$.\marginnote{Per Reintiz's office hours, this is to say, type two error given these alternative values for $p$.}
+
+Recall, $\pi = P(H_1 \mid H_1)$.
+
+When $p=.5$
+\begin{align*}
+\pi &= P(H_1 \mid H_1)\\
+&= P(x \leq 4 \cup x \geq 488 \mid p=.5)\\
+&= \sum_{i=1}^4P(x=i \mid p=.5) + 1 - P(x \leq 488 \mid p=.5)\\
+&= .9375
+\end{align*}
+
+When $p=.001$
+\begin{align*}
+\pi &= P(H_1 \mid H_1)\\
+&= P(x \leq 4 \cup x \geq 488 \mid p=.001)\\
+&= \sum_{i=1}^4P(x=i \mid p=.001) + 1 - P(x \leq 488 \mid p=.001)\\
+&= .62
+\end{align*}
 \end{enumerate}
 
 
@@ -137,11 +161,11 @@ Hence for $x \leq 4$ we have likelihood ratio less than $0.1$.
 
 Let $X_1,...,X_n$ be a random sample from an exponential distribution with the density function $f(x\mid \theta)= \theta e^{-\theta x}$.  Derive a likelihood ratio test of $H_0$: $\theta = \theta_0$ versus $H_A$: $\theta \neq \theta_0$, and show that the rejection region is of the form $\{\overline{X}e^{-\theta_0\overline{X}} \leq c \}$.
 
-\newthought{First}, \marginnote{I've found this in previous homeworks.} recall that the mle of $L(\theta)$ is $\hat{\theta}=\overline{X}$.  Set up the likelihood ratio test
+\newthought{First}, \marginnote{I've found this in previous homeworks.} recall that the mle of $L(\theta)$ is $\hat{\theta}=\frac{1}{\overline{X}}$.  Set up the likelihood ratio test
 
 \[ \Lambda = \frac{\max_{p \in w_0}[L(p)]}{\max_{p \in \Omega}[L(p)]}. \]
 
-The numerater will be
+The numerator will be
 
 \[ L(\theta_0) = \prod_{i=1}^n \theta e^{-\theta_0 x_i} \]
 and the denomitaor
@@ -223,7 +247,7 @@ Test whether a Binomial Distribution $(n=5, \theta)$ fits these data.
 
 \begin{marginfigure}
 \includegraphics{James_Mill}
-\caption{James Mill, the economist}
+\caption{James Mill, the economist.  Apparently, this guy spent his life in love with a woman who had already been promised to another.  After years of her marriage, the husband died.  The two finally got together.  Then Like 6 months passed and she died.  Bummer, right?}
 \end{marginfigure}
 
 \newthought{First}, knowing the MLE of a binomial will be useful.
