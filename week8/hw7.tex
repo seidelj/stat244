@@ -362,7 +362,46 @@ Totals     & \multicolumn{1}{l|}{10}     & \multicolumn{1}{l|}{68}    & 27     &
 
 \[ \chi^2 = \sum_{i=1}^3 \sum_{j=1}^3 \frac{\Big[X_{ij} - \Big(\frac{X_{i+}X_{+j}}{n}\Big)\Big]^2}{\Big(\frac{X_{i+}X_{+j}}{n}\Big)} \]
 
-Which computes to $\chi^2 = 11.16$.  We check this value with the table, given $(r-1)(c-1)=2\cdot 2=4$ degress of freedom.  From the Chi-Squared table, we'd have a p-value $>.025$ which provides fairly strong evidence against the null hypothesis that the patterns are independent. 
+Which computes to $\chi^2 = 11.16$.  We check this value with the table, given $(r-1)(c-1)=2\cdot 2=4$ degress of freedom.  From the Chi-Squared table, we'd have a p-value $<.025$ which \marginnote{Small p-values provide strong evidence against Null when chi-square testing.}provides fairly strong evidence against the null hypothesis that the patterns are independent.
 
+
+\subsection{Question 7}
+For the Bortkiewicz Death by Horsekick Data, test the hypothesis that the data follow a Poisson distribution.  You should group the count for "4 or more" a one category.
+
+\newthought{First}, estimate $\lambda$.  The likelihood function is
+\begin{align*}
+L(\lambda) &= \prod_{i=1}^n e^{-\lambda} \frac{\lambda^{x_i}}{x_i!} \\
+&= e^{-n\lambda} \lambda^{\overline{X}n} \prod_{i=1}^n \frac{1}{x_i!}\\
+\end{align*}
+Then take the $\log L(\lambda)$
+\[ \log L(\lambda) = -n\lambda + \overline{X}n \log(\lambda) + \log(\prod_{i=1}^n \frac{1}{x_i!})\]
+
+Next, differentiate
+\[ \frac{d \log L(\lambda)}{d \lambda} = -n + \frac{\overline{X}n}{\lambda} \]
+
+Then, \marginnote{If this was a problem about MLE, I'd take second derivative to show this maximizes.  I did this in previous homeworks so I'm not doing it here.  An important step to remember, none-the-less.}by setting the above equal to $0$, solve for $\lambda$ to get
+\[ \hat{\lambda} = \overline{X} \]
+
+To test the hypothesis, we'll create a $X^2$ statistic using expected and compaired values.  To find expected values, compute $\hat{\theta}$ given the data.
+
+\[ \hat{\theta} = \frac{0 \cdot 144 + 1 \cdot 99 + 2 \cdot 32 + 3 \cdot 11 + 4 \cdot 2}{280} = .7 \]
+
+\begin{table}
+\centering
+\caption{Horse Kicks}
+\label{bort}
+\begin{tabular}{l|lllll}
+No. Deaths       & 0   & 1  & 2  & 3  & $\geq$ 4 \\
+Observed         & 144 & 91 & 32 & 11 & 2        \\
+Expected         &139.04&97.33&34.07&7.95&1.61     \\
+Comp Chi-Squared &0.18&0.41&0.13&1.17&0.10
+\end{tabular}
+\end{table}
+
+From the table we have chi-squared statistic $X^2=1.98$.  With $k=5-1-1=3$ degress of freedom, $\chi_3^4(.1) = 6.25$.
+
+\[ X^2 = 1.98 < \chi_3^4(.1) = 6.25 \]
+
+The value $X^2$ is even less than the expected value $k=3$.  Additionally, looking at the Chi-Square table we confirm that the p-value is greater than .1 and we accept the null hypothesis that the data follow Poisson distribution.
 \end{document}
 \grid
