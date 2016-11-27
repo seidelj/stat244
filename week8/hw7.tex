@@ -102,7 +102,7 @@ Where the rejection region consists of small values for $\Lambda$.  In this case
 
 \[ \max_{p \in w_0}[L(p)] = p_0(1-p_0)^{x-1}. \]
 
-For the denomitor we have to maximize the likelihood for $p \in \Omega$.  Which is the mle of $f(x \mid p) = p(1-p)^{x}$, $\hat{p} = \frac{1}{\overline{X}}$. Which makes
+For the denominator, maximize the likelihood for $p \in \Omega$.  Which is the mle of $f(x \mid p) = p(1-p)^{x}$, $\hat{p} = \frac{1}{\overline{X}}$. Which makes
 
 \[ \max_{p \in \Omega}[L(p)] = \frac{1}{\overline{X}}\Big(1-\frac{1}{\overline{X}}\Big)^{x-1}. \]
 
@@ -114,7 +114,7 @@ Which is the generalized likelihood ratio that will test the hypothesis.
 
 \item For $p_0=0.01$, by some combination of numerical experimentation and mathematical analysis, find the set of possible valyes of $x$ for $X$ for which the likelihood ratio is less than $0.1$.
 
-When graphing the the function for $\Lambda$ with $p_0=.01$, its clear that there are two values of $x$ that make likelihood ration less than $.1$.
+When graphing the the function \marginnote{See Figure 1.} for $\Lambda$ with $p_0=.01$, its clear that there are two values of $x$ that make likelihood ration less than $.1$.
 
 \begin{figure}
 \includegraphics{q1}
@@ -207,7 +207,6 @@ $\{\overline{X} \leq x_0\} \cup \{ \overline{X} \geq x_1 \}$, consider the graph
 
 \begin{figure}
 \includegraphics{q3}
-\caption{}
 \end{figure}
 
 There would be a $c$ chosen that corresponds with the $Y$ axis of the graph and a horizontal line would interect the function at two values of $x$.
@@ -225,7 +224,7 @@ If we want $\alpha=.05$ then we should set
 
 to determine what $c$ should be.
 
-\item Explain why $\sum_{i=1}^10 X_i$ and hence $\overline{X}$ follow gamma distributions when $\theta_0=1$.  How could this knowledge be used to choose c?
+\item Explain why $\sum_{i=1}^{10} X_i$ and hence $\overline{X}$ follow gamma distributions when $\theta_0=1$.  How could this knowledge be used to choose c?
 
 Under $H_0$: $\theta_0=1$ $X_i \sim Exponetial(1)$ which is a special ase of $\Gamma(1,\lambda)$ or in this particular case $\Gamma(1,1)$.  On the last homework, I found that $\sum_{i=1}^n X_i \sim \Gamma(n,1)$ and $\overline{X} \sim \Gamma(n,n)$.  Knowing the exact distribution, means I could compute the exact value of $c$ for which $95$ coverage for acceptable values of $H_0$.
 
@@ -265,7 +264,7 @@ Setting the above equal to zero and solving for $\theta$ give the mle.
 
 \[ \hat{\theta} = \overline{X} \]
 
-Using the table we can compute the mle, $\hat{\theta} = 339/215(5) = .31$.  With this a few rows can be added to the table.
+Using the table we can compute the mle, $\hat{\theta} = 339/215\cdot 5 = .31$.  With this a few rows can be added to the table.
 
 Expected is calculated
 
@@ -275,7 +274,7 @@ Then calculate each component of
 
 \[ X^2 = \sum_{i=1}^m \frac{[x_i - np_i(\hat{\theta})]^2}{np_i(\hat{\theta})}\]
 
-Where $m=6$ cells.
+Where $m=6$ cells and $$np_i(\hat{theta})$ is the expected value for the $i$th cell.
 
 \begin{table}
 \centering
@@ -293,7 +292,7 @@ Summing up the last row of the table, the chi-square statistic $X^2=180.4$ with 
 
 \[ 180.4 = X^2 > \chi_4^2(.005) = 14.86 \]
 
-Which rejects the null hypothesis that $X \sim Bin(n=5, \theta)$.
+Which rejects the null hypothesis that $X \sim Bin(n=5, \theta)$\marginnote{However, it's important to remember that small P-values provide less evidence against the Null.}.
 
 
 \subsection{Question 5}
@@ -318,7 +317,7 @@ Theory has is that the probabilities of those types depends on gene frequency pa
 
 Test if the community fits the theory. \marginnote{Can't afford to estimate three parameters with only 4 cells!}
 
-\newthought{Since} there are only 4 cells, I cannot afford to estimate all 3 parameters.  Instead, I'll just estimate 2 and the substute the third $r'= 1- .246 -.173 = .581$
+\newthought{Since} there are only 4 cells, I cannot afford to estimate all 3 parameters.  Instead, I'll just estimate 2 and the substitute the third $r'= 1- .246 -.173 = .581$
 
 
 
@@ -405,7 +404,7 @@ From the table we have chi-squared statistic $X^2=1.98$.  With $k-1-1=5-1-1=3$ d
 The value $X^2$ is even less than the expected value $k=3$.  Additionally, looking at the Chi-Square table we confirm that the p-value is greater than .1 and we accept the null hypothesis that the data follow Poisson distribution.
 
 \subsection{Question 8}
-An American roulette wheel is spun $n=3880$ times in order to test if it is fair (i.e. to test if each slot has probability $\frac{1}{38}$).  Suppose that each of the 36 number slots (1,2,...,36) comesup exactly 100 timesand each of "$0$" and "$00$" comes up 140 times.
+An American roulette wheel is spun $n=3880$ times in order to test if it is fair (i.e. to test if each slot has probability $\frac{1}{38}$).  Suppose that each of the 36 number slots (1,2,...,36) comes up exactly 100 timesand each of "$0$" and "$00$" comes up 140 times.
 
 \begin{enumerate}
 
@@ -420,17 +419,17 @@ Computed, $X^2 = 29.688$, which is even less that our expected value $k-1=37$.  
 
 \[X^2 = 29.668 < \chi^2_{37}(.05) = 52.172 \]
 
-Which provides no evidence to reject the null hypothesis.
+Which provides no evidence to reject the null hypothesis that the wheel is fair.
 
 \item Now suppose that before you had looked at the data you had suspected that the numbred slots were less likely that "$0$" or "$00$" and you had decided to test the binomial hypothesis $H_0$: $P($"$0$" or "$00$"$)=\frac{2}{38}$ versus $H_1$: $P($"$0$" or "$00$"$) > \frac{2}{38}$.  We know that the UMP test of these hypothesis rejects $H_0$ if $Z(=$total number of "$0$" and "$00$"s$)$ is greater than C, where C is chosen for a level $0.05$ test.  Use that fact that under $H_0$ $Z$ has approximately a Normal $N(\frac{2n}{38},\frac{2n}{38}\cdot\frac{36}{38})$ distribution to find $C$ and perform this test.
 
 \newthought{The} hypothesis to test is $H_0$: $\theta_0=\frac{2}{38}$ versus $H_1$: $\theta_1 > \theta_0$.  The goal is to compare $Z=280$ (the observed number of times that "0" or "00" appear) with some critical value $C$.  In particular, the test well be set up such that if $Z > C$ then reject $H_0$.
 
-The problem states that $Z$ follows a normal distribution.  Using $n=3880$ this is computed to $Z \sim N(204.21, 193.46)$.  With the information about $Z$'s disrtibution and $\alpha=.5$ solve for $C$.
+The problem states that $Z$ follows a normal distribution.  Using $n=3880$ this is computed to $Z \sim N(204.21, 193.46)$.  With the information about $Z$'s distibution and $\alpha=.5$ solve for $C$.
 
 \begin{align*}
 .05 &= P(Z > C \mid H_0) \\
-&= P\big[ \Big(\frac{280-204.21}{13.9}\Big) > \Big(\frac{C-204.21}{13.9}\Big)\\
+&= P\big[ \Big(\frac{280-204.21}{13.9}\Big) > \Big(\frac{C-204.21}{13.9}\Big)\Big]\\
 &= P\big[ Z^* > \Big(\frac{C-204.21}{13.9}\Big)\Big]\\
 \end{align*}
 
@@ -445,7 +444,7 @@ Which leads us to reject the null, since $Z=280 > C=220.76$.
 
 \item Compare the result in (2) with that in (1).
 
-In item (1) we did not reject the $H_0$, contrary to item 2.  The deviation in the data would appear to be large and based on a focused hypothesis test, such as that in (2) enough to reject the hypothesis that the wheel is fair.  However, in (1) we see that the Chi-Squared test can help mitigate being mislead by deviations selected as large.  I'll conclude from this that, ultimately, one needs to have a good understanding of the world as it is to determine which test best fits the problem.
+In item (1) we did not reject the $H_0$, contrary to item 2.  The deviation in the data would appear to be large and based on a focused hypothesis test, such as that in (2) enough to reject the hypothesis that the wheel is fair.  However, in (1) we see that the Chi-Squared test can help mitigate being mislead by deviations selected as large.  In general, one needs to have a good understanding of the world as it is to determine which test best fits the problem.
 \end{enumerate}
 \end{document}
 \grid
