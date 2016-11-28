@@ -196,37 +196,38 @@ Suppose, to be specific, that in problem 12, $\theta_0=1$, $n=10$, and that $\al
 
 \item Show that rejection region is of the form $\{\overline{X} \leq x_0\} \cup \{ \overline{X} \geq x_1 \}$, where $x_0$ and $x_1$ are deterimined by $c$.
 
-\newthought{Now} that we are given a value for $\theta_0$ we have
+\newthought{Now} that we are given $\theta_0=1$, the likelihood function can be written
 
 \[ f(x\mid \theta_0) = xe^{-x}. \]
 
 But we also found in the previous question that our test rejects when
-\[ f(\overline{X} \mid \theta_0) = \overline{X} e^{(-\overline{X})} \]
+\[ f(\overline{X} \mid \theta_0=1) = \overline{X} e^{(-\theta_0 \overline{X})} \]
 is small, specifically when less than $c$.  To see why it takes the form
-$\{\overline{X} \leq x_0\} \cup \{ \overline{X} \geq x_1 \}$, consider the graph of the function.
+$\{\overline{X} \leq x_0\} \cup \{ \overline{X} \geq x_1 \}$, consider the graph of the function in Figure 2.
 
 \begin{figure}
 \includegraphics{q3}
+\caption{Graph of $xe^{-x}$}
 \end{figure}
 
 There would be a $c$ chosen that corresponds with the $Y$ axis of the graph and a horizontal line would interect the function at two values of $x$.
 
 \item Explain why $c$ should be chosen so that $P(\overline{X} e^{(-\overline{X})} \leq c) = .05$.
 
-\newthought{This} is just a restatement of Type I error under Neyman-Pearson.
+\newthought{This} is a restatement of Type I error under Neyman-Pearson.
 
 \[Pr(\text{Reject }H_0 \mid H_0) = Pr(x \in [0, c] \mid \theta_0) \]
 
 Which can be worded to say, the probability that $x$ falls in the rejection zone.  Furthermore, we found that $P(\overline{X} e^{(-\overline{X})})$ provides a rejection zone for $\Lambda$.  What remains is to determine how willing we are to make Type 1 error.
 
 If we want $\alpha=.05$ then we should set
-\[ Pr(x \in [0, c] \mid \theta_0) = Pr(f(\overline{X} \mid \theta)) < c) = .05 \]
+\[ Pr(x \in [0, c] \mid \theta=1) = Pr(f(\overline{X} \mid \theta=1)) < c) = .05 \]
 
 to determine what $c$ should be.
 
 \item Explain why $\sum_{i=1}^{10} X_i$ and hence $\overline{X}$ follow gamma distributions when $\theta_0=1$.  How could this knowledge be used to choose c?
 
-Under $H_0$: $\theta_0=1$ $X_i \sim Exponetial(1)$ which is a special ase of $\Gamma(1,\lambda)$ or in this particular case $\Gamma(1,1)$.  On the last homework, I found that $\sum_{i=1}^n X_i \sim \Gamma(n,1)$ and $\overline{X} \sim \Gamma(n,n)$.  Knowing the exact distribution, means I could compute the exact value of $c$ for which $95$ coverage for acceptable values of $H_0$.
+Under $H_0$: $\theta_0=1$ $X_i \sim Exponential(1)$ which is a special ase of $\Gamma(1,\lambda)$ or in this particular case $\Gamma(1,1)$.  On the last homework, I found that $\sum_{i=1}^n X_i \sim \Gamma(n,1)$ and $\overline{X} \sim \Gamma(n,n)$.  Knowing the exact distribution, means I could compute the exact value of $c$ for which $95$ coverage for acceptable values of $H_0$.
 
 In this day and age, a computer would be the easiest way to do this.  The gist would be first solve $f(\overline{X})=c$ to get $x_0(c)$ and $x_1(c)$.  Then solve
 \[ \alpha(c) = F(x_0(c)) + 1-F(x_1(c)) \]
@@ -235,7 +236,7 @@ Where $F(x)$ is cdf of $\Gamma(10,10)$.
 
 \item Suppose you hadn't thought of the preceding fact.  Explain how you could determine a good approximation to $c$ by generating random numbers on a computer (simulation).
 
-\newthought{Generate} a bunch of samples from $Exponential(1)$ of size $n=10$.  Then compute $\overline{X}e^{\overline{X}}$ for each sample. Sort the result and set the cuttoff as the value indexed at the $5\%$ of the number of samples generated.  For example, if the results are stored in some list of size $10000$ then you'd take value indexed at list[500] as the cuttoff value for a close approximation.
+\newthought{Generate} a bunch of samples from an $Exponential(1)$ distribution of size $n=10$.  Then compute $\overline{X}e^{\overline{X}}$ for each sample. Sort the result and set the cuttoff as the value indexed at the $5\%$ of the number of samples generated.  For example, if the results are stored in some list of size $10000$ then you'd take value indexed at list[500] as the cuttoff value for a close approximation.
 \end{enumerate}
 
 \subsection{Question 4}
@@ -274,7 +275,7 @@ Then calculate each component of
 
 \[ X^2 = \sum_{i=1}^m \frac{[x_i - np_i(\hat{\theta})]^2}{np_i(\hat{\theta})}\]
 
-Where $m=6$ cells and $np_i(\hat{theta})$ is the expected value for the $i$th cell.
+Where $m=6$ cells and $np_i(\hat{\theta})$ is the expected value for the $i$th cell.
 
 \begin{table}
 \centering
@@ -288,7 +289,7 @@ Component of Chi-Squared &82.62&55.59&4.25&4.8&24.14&9.0
 \label{millwords}
 \end{table}
 
-Summing up the last row of the table, the chi-square statistic $X^2=180.4$ with 4 degrees of freedom (6 cells and one parameter was estimated from the data).  Finally, our rejection region is $X^2 > \chi_4^2(\alpha)$.  If we specify $\alpha=.005$ (giving our null hypothesis the best chance) our test is
+Summing up the last row of Table 1, the chi-square statistic $X^2=180.4$ with 4 degrees of freedom (6 cells and one parameter was estimated from the data).  Finally, our rejection region is $X^2 > \chi_4^2(\alpha)$.  If we specify $\alpha=.005$ (giving our null hypothesis the best chance) our test is
 
 \[ 180.4 = X^2 > \chi_4^2(.005) = 14.86 \]
 
@@ -419,13 +420,13 @@ Computed, $X^2 = 29.688$, which is even less that our expected value $k-1=37$.  
 
 \[X^2 = 29.668 < \chi^2_{37}(.05) = 52.172 \]
 
-Which provides no evidence to reject the null hypothesis that the wheel is fair.
+Which provides little evidence to reject the null hypothesis that the wheel is fair.
 
 \item Now suppose that before you had looked at the data you had suspected that the numbred slots were less likely that "$0$" or "$00$" and you had decided to test the binomial hypothesis $H_0$: $P($"$0$" or "$00$"$)=\frac{2}{38}$ versus $H_1$: $P($"$0$" or "$00$"$) > \frac{2}{38}$.  We know that the UMP test of these hypothesis rejects $H_0$ if $Z(=$total number of "$0$" and "$00$"s$)$ is greater than C, where C is chosen for a level $0.05$ test.  Use that fact that under $H_0$ $Z$ has approximately a Normal $N(\frac{2n}{38},\frac{2n}{38}\cdot\frac{36}{38})$ distribution to find $C$ and perform this test.
 
 \newthought{The} hypothesis to test is $H_0$: $\theta_0=\frac{2}{38}$ versus $H_1$: $\theta_1 > \theta_0$.  The goal is to compare $Z=280$ (the observed number of times that "0" or "00" appear) with some critical value $C$.  In particular, the test well be set up such that if $Z > C$ then reject $H_0$.
 
-The problem states that $Z$ follows a normal distribution.  Using $n=3880$ this is computed to $Z \sim N(204.21, 193.46)$.  With the information about $Z$'s distibution and $\alpha=.5$ solve for $C$.
+The problem states that $Z$ follows a normal distribution.  Using $n=3880$,  the distribution computes to $Z \sim N(204.21, 193.46)$.  With the information about $Z$'s distibution and $\alpha=.5$ solve for $C$.
 
 \begin{align*}
 .05 &= P(Z > C \mid H_0) \\
