@@ -276,7 +276,6 @@ Then calculate each component of
 \[ X^2 = \sum_{i=1}^m \frac{[x_i - np_i(\hat{\theta})]^2}{np_i(\hat{\theta})}\]
 
 Where $m=6$ cells and $np_i(\hat{\theta})$ is the expected value for the $i$th cell.
-
 \begin{table}
 \centering
 \begin{tabular}{l|llllll}
@@ -288,6 +287,7 @@ Component of Chi-Squared &82.62&55.59&4.25&4.8&24.14&9.0
 \caption{Class I words}
 \label{millwords}
 \end{table}
+
 
 Summing up the last row of Table 1, the chi-square statistic $X^2=180.4$ with 4 degrees of freedom (6 cells and one parameter was estimated from the data).  Finally, our rejection region is $X^2 > \chi_4^2(\alpha)$.  If we specify $\alpha=.005$ (giving our null hypothesis the best chance) our test is
 
@@ -362,7 +362,7 @@ Totals     & \multicolumn{1}{l|}{10}     & \multicolumn{1}{l|}{68}    & 27     &
 
 \[ \chi^2 = \sum_{i=1}^3 \sum_{j=1}^3 \frac{\Big[X_{ij} - \Big(\frac{X_{i+}X_{+j}}{n}\Big)\Big]^2}{\Big(\frac{X_{i+}X_{+j}}{n}\Big)} \]
 
-Which computes to $\chi^2 = 11.16$.  We check this value with the table, given $(r-1)(c-1)=2\cdot 2=4$ degress of freedom.  From the Chi-Squared table, we'd have a p-value $<.025$ which \marginnote{Small p-values provide strong evidence against Null when chi-square testing.  P-values are the chance of false positives, so when they are small the null unlikeyl.}provides fairly strong evidence against the null hypothesis that the patterns are independent.
+Which computes to $\chi^2 = 11.16$.  We check this value with the table, given $(r-1)(c-1)=2\cdot 2=4$ degress of freedom.  From the Chi-Squared table, we'd have a p-value $<.025$ which \marginnote{Small p-values provide strong evidence against Null when using a chi-square test.  P-values are the chance of false positives; when P-values are small the null hypothesis is unlikely.}provides fairly strong evidence against the null hypothesis that the patterns are independent.
 
 
 \subsection{Question 7}
