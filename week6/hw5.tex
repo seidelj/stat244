@@ -185,30 +185,36 @@ Hence
 \end{multline}
 \end{enumerate}
 
-\subsection{Question 3`}
+\subsection{Question 3}
 Suppose that $X$ is the number of successes in a Binomial experiment with $n$ trials and probability of success $\theta/(1+\theta)$, where $0\leq \theta < \infty$.
 
 \begin{enumerate}
 \item Find the MLE of $\theta$.
 
 \newthought{Consider}
-\[p(x\mid \theta) = \binom{n}{x}\Big(\frac{\theta}{1+\theta}\Big)^x\big(1-\frac{\theta}{1+\theta} \Big)^{n-x}. \]
+\[p(x\mid \theta) = \binom{n}{X}\Big(\frac{\theta}{1+\theta}\Big)^X\big(1-\frac{\theta}{1+\theta} \Big)^{n-X}. \]
 
 Then
-\[L(\theta) = \binom{n}{x}\Big(\frac{\theta}{1+\theta}\Big)^x\big(1-\frac{\theta}{1+\theta} \Big)^{n-x}. \]
+\[L(\theta) = \binom{n}{X}\Big(\frac{\theta}{1+\theta}\Big)^X\big(1-\frac{\theta}{1+\theta} \Big)^{n-X}. \]
 
 The log likelihood is
-\[ \log L(\theta) = \log\binom{n}{x} + x \log(\frac{\theta}{1+\theta}) + (n-x)\log(1-\frac{\theta}{1+\theta}) \]
 \begin{align*}
-\frac{d}{d\theta} \log L(\theta) &= 0 + \frac{x(1+\theta)}{\theta} - (n-x)(\theta+1)\\
-&= \frac{x(1+\theta)}{\theta} - (n-x)(\theta+1)\\
+\log L(\theta) &= \log\binom{n}{X} + X\log(\theta) - X\log(1+\theta) - (n-X)\log(1+\theta)\\
+&= \log\binom{n}{X} + X\log(\theta) - n\log(1+\theta) \\
+\end{align*}
+Differentiating,
+\begin{align*}
+\frac{d}{d\theta} \log L(\theta) &= \frac{X}{\theta} - \frac{n}{\theta+1}\\
 \end{align*}
 
 Setting the above to $0$ results in
-\[ \hat{\theta} = \frac{x}{n-x} \]
-furthermore
-\[\frac{d^2}{d\theta^2} = -n - \frac{x}{\theta^2} + x \]
-
+\[ \hat{\theta} = \frac{X}{n-X} \]
+furthermore evaluating the second derivative using $\hat{\theta}$
+\begin{align*}
+\frac{d^2 \log L(\theta)}{d\theta^2} &= -\frac{X}{\theta^2} + \frac{n}{(\theta+1)^2}\\
+&= -\frac{X}{\hat{\theta}^2} + \frac{n}{(\hat{\theta}+1)^2}\\
+&= -\frac{(n - X)^2}{X} + \frac{(n-X)^2}{n} < 0\\
+\end{align*}
 verifying that this maximizes $\hat{\theta}$.
 
 \item Use Fisher's Theorem to find the approximate distribution of the MLE when $n$ is large.
@@ -217,18 +223,16 @@ Fisher's approximation allows the result for large $n$ in the given case, $\hat{
 
 It remains to find $\tau^2(\theta)$.
 
-\[ \frac{1}{\tau^2(\theta)} = -E\Big[ \frac{d^2}{d\theta^2} \log f(X_1\mid \theta)\Big]. \]
+\[ \frac{1}{\tau^2(\theta)} = -E\Big[ \frac{d^2}{d\theta^2} \log f(X\mid \theta)\Big]. \]
 \begin{align*}
-E[-n - \frac{x}{\theta^2} + x] &= -n - \frac{E(X)}{\theta^2} + E(X)\\
-&= -n -\frac{n\theta}{1+\theta}\cdot \frac{1}{\theta^2} + \frac{n\theta}{1+\theta}\\
-&= n(-1 - \frac{1+\theta^2}{(1+\theta)\theta})\\
-&= -n(1 + \frac{1-\theta}{\theta})\\
-&= -\frac{n}{\theta}\\
+E[\frac{X}{\theta^2} + \frac{n}{(\theta+1)^2}] &= -\frac{E(X)}{\theta^2} + \frac{n}{(\theta+1)^2}\\
+&= -\frac{n}{(1+\theta)\theta} + \frac{n}{(1+\theta)^2}\\
+&= -\frac{n}{(1+\theta)^2\theta}\\
 \end{align*}
 
-Hence $\tau^2(\theta) = \frac{\theta}{n}$
+Hence $\tau^2(\theta) = \frac{\theta(1+\theta)^2}{n}$
 
-Applying Fisher, $\hat{\theta}$ will have an approximately normal $N(\theta, \theta)$ distribution.
+Applying Fisher, $\hat{\theta}$ \marginnote{It is important to recognize that we evaulated the entire likelihood function, so we take $\tau^2(\theta)$ as is.}will have an approximately normal $N(\theta,\frac{\theta(1+\theta)^2}{n})$ distribution.
 
 \end{enumerate}
 
@@ -349,23 +353,23 @@ Taking the log gives
 \[ \log L(\theta) = \sum_{i=1}^n \Big[ \log(x_i) - 2\log(\theta) - \frac{x_i^2}{2\theta^2} \Big]. \]
 
 Differentiating
-\[ \frac{d}{d\theta} \log L(\theta) = -\frac{2n}{\theta} + \frac{\sum_{i=1}^n x_i}{\theta^3}. \]
+\[ \frac{d}{d\theta} \log L(\theta) = -\frac{2n}{\theta} + \frac{\sum_{i=1}^n x_i^2}{\theta^3}. \]
 
 Setting the derivative of the log likelihood to zero yields
 
-\[\hat{\theta} = \sqrt{\frac{\sum_{i=1}^n x_i}{2n}} \]
+\[\hat{\theta} = \sqrt{\frac{\sum_{i=1}^n x_i^2}{2n}} \]
 \item Find the asymptotic variance of the mle.
 
 \begin{align*}
-\frac{d^2}{d\theta^2} \log L(\theta)  &= \frac{d^2}{d\theta^2} \frac{2n}{\theta} + \frac{\sum_{i=1}^n x_i}{\theta^3}\\
-&= \frac{2n}{\theta^2} - \frac{3 \sum_{i=1}^n x_i}{\theta^4} \\
+\frac{d^2}{d\theta^2} \log L(\theta)  &= \frac{d^2}{d\theta^2} -\frac{2n}{\theta} + \frac{\sum_{i=1}^n x_i^2}{\theta^3}\\
+&= \frac{2n}{\theta^2} - \frac{3 \sum_{i=1}^n x_i^2}{\theta^4} \\
 &= \frac{2n}{\hat{\theta}^2} - \frac{6n}{\hat{\theta}^2}\\
 &= -\frac{4n}{\hat{\theta}^2}\\
 \end{align*}
 
-\[ \frac{1}{\tau^2(\theta)} = -E \Big[ -\frac{4n}{\hat{\theta}^2}\Big] \]
+\[ \frac{1}{\tau^2(\theta)} = -E \Big[ -\frac{4n}{\theta^2}\Big] \]
 
-So the asymptotic variance is $\frac{\hat{\theta}^2}{4n}$
+So the asymptotic variance is $\frac{\theta^2}{4n}$
 \end{enumerate}
 
 \end{document}
